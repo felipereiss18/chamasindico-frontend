@@ -10,17 +10,17 @@ export class TokenService {
   }
 
   getToken(): string {
-    return <string>window.localStorage.getItem(KEY);
+    return <string>window.sessionStorage.getItem(KEY);
   }
 
   setToken(token: string | null){
     if (token) {
-      window.localStorage.setItem(KEY, token)
+      window.sessionStorage.setItem(KEY, token)
     }
   }
 
   removeToken(){
-    window.localStorage.removeItem(KEY)
+    window.sessionStorage.removeItem(KEY)
   }
 
 }
