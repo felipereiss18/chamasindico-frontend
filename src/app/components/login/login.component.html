@@ -1,0 +1,23 @@
+<form [formGroup]="loginForm" fxLayout="column" fxLayoutAlign="space-betwenn center" (submit)="login()">
+  <div class="div-login">
+    <mat-card fxLayout="column" fxLayoutAlign="space-between center" class="card-login">
+      <div>
+        <h1>Login</h1>
+      </div>
+      <mat-form-field appearance="legacy" floatLabel="always" class="field">
+        <mat-label>Usuário</mat-label>
+        <input matInput name="usuario" formControlName="usuario" type="text" required placeholder="">
+        <mat-error *ngIf="loginForm.controls.usuario.invalid">{{getMessageError(loginForm.controls.usuario)}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard" floatLabel="always" class="field">
+        <mat-label>Senha</mat-label>
+        <input matInput name="senha" formControlName="senha" type="password" required placeholder="">
+        <mat-error *ngIf="loginForm.controls.senha.invalid">{{getMessageError(loginForm.controls.usuario)}}</mat-error>
+      </mat-form-field>
+      <div>
+        <button mat-raised-button type="submit" color="primary">LOGIN</button>
+      </div>
+    </mat-card>
+  </div>
+
+</form>

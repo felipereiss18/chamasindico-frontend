@@ -1,0 +1,43 @@
+<div class="sidenav_container" [@onSideNavChange]="sideNavState ? 'open' : 'close'">
+  <div fxLayout="column" fxLayoutGap="10px" style="height: 100%">
+    <div class="user_menu">
+      <mat-nav-list>
+        <a mat-list-item>
+          <img class="jim"
+               src="https://a57.foxnews.com/media2.foxnews.com/BrightCove/694940094001/2018/06/21/931/524/694940094001_5800293009001_5800284148001-vs.jpg?ve=1&tl=1" alt="">
+          <span [@animateText]="linkText ? 'show' : 'hide'" style="padding-left: 5px">{{usuario?.nome}}</span>
+        </a>
+      </mat-nav-list>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div>
+      <mat-nav-list>
+        <ng-container *ngFor="let menu of menus">
+          <a mat-list-item (click)="abrirSubMenus(menu)">
+            <mat-icon style="padding-right: 5px;" *ngIf="menu?.icon">{{menu?.icon}}</mat-icon>
+            <img style="padding-right: 5px;" *ngIf="menu?.img" src="{{menu?.img}}">
+            <span [@animateText]="linkText ? 'show' : 'hide'">{{menu?.name}}</span>
+          </a>
+          <ng-container *ngIf="menu.subMenus && menu.openSubMenus">
+            <a mat-list-item *ngFor="let subMenus of menu.subMenus">
+              <mat-icon style="padding-left: 10px; padding-right: 5px;" *ngIf="subMenus?.icon">{{subMenus?.icon}}</mat-icon>
+              <img style="padding-left: 10px; padding-right: 5px;" *ngIf="subMenus?.img" src="{{subMenus?.img}}"
+                   width="24px" height="24px">
+              <span [@animateText]="linkText ? 'show' : 'hide'">{{subMenus?.name}}</span>
+            </a>
+          </ng-container>
+        </ng-container>
+      </mat-nav-list>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+  <span class="spacer"></span>
+  <div fxLayout="row" fxLayoutAlign="end center" style="padding: 0px 10px;">
+    <button mat-icon-button (click)="onSinenavToggle()">
+      <mat-icon *ngIf="sideNavState">arrow_left</mat-icon>
+      <mat-icon *ngIf="!sideNavState">arrow_right</mat-icon>
+    </button>
+  </div>
+</div>
