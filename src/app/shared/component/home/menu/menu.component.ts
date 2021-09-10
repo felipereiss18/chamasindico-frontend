@@ -7,7 +7,7 @@ import {Roles} from "../../../../core/auth/user/roles.enum";
 import {User} from "../../../../core/auth/user/user";
 
 interface Menu {
-  link: string;
+  link?: string;
   name: string;
   icon?: string;
   img?: string,
@@ -57,10 +57,10 @@ export class MenuComponent implements OnInit {
   private criarMenu(perfil: Perfil | null): Menu[] {
     if (perfil?.role === Roles.ADMIN){
       return [
-        {name: 'Home', link:'some-link', icon: 'home'},
-        {name: 'Configurações', link:'some-link', icon: 'settings_applications',
+        {name: 'Home', link:'', icon: 'home'},
+        {name: 'Configurações', icon: 'settings_applications',
           subMenus: [
-            {name: 'Condomínios', link:'some-link', icon: 'apartment'},
+            {name: 'Condomínios', link:'condominio', icon: 'apartment'},
             {name: 'Blocos', link: 'some-link', img: 'assets/img/edificios.png'},
             {name: 'Unidades', link: 'some-link', icon: 'maps_home_work'},
             {name: 'Áreas Comuns', link: 'some-link', icon: 'deck'},
@@ -69,10 +69,10 @@ export class MenuComponent implements OnInit {
       ];
     }else if (perfil?.role === Roles.SINDICO) {
       return [
-        {name: 'Home', link:'some-link', icon: 'home'},
+        {name: 'Home', link:'', icon: 'home'},
         {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
         {name: 'Usuários', link:'some-link', icon: 'person'},
-        {name: 'Condomínio', link:'some-link', icon: 'apartment',
+        {name: 'Condomínio', icon: 'apartment',
           subMenus: [
             {name: 'Blocos', link: 'some-link', img: 'assets/img/edificios.png'},
             {name: 'Unidades', link: 'some-link', icon: 'maps_home_work'},
@@ -87,7 +87,7 @@ export class MenuComponent implements OnInit {
       ];
     }else if (perfil?.role === Roles.PROPRIE) {
       return [
-        {name: 'Home', link:'some-link', icon: 'home'},
+        {name: 'Home', link:'', icon: 'home'},
         {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
         {name: 'Comunicados', link:'some-link', icon: 'campaign'},
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
@@ -97,7 +97,7 @@ export class MenuComponent implements OnInit {
       ];
     }else if (perfil?.role === Roles.INQUILINO) {
       return [
-        {name: 'Home', link:'some-link', icon: 'home'},
+        {name: 'Home', link:'', icon: 'home'},
         {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
         {name: 'Comunicados', link:'some-link', icon: 'campaign'},
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
@@ -107,16 +107,16 @@ export class MenuComponent implements OnInit {
       ];
     }else if (perfil?.role === Roles.PORTEIRO) {
       return [
-        {name: 'Home', link:'some-link', icon: 'home'},
+        {name: 'Home', link:'', icon: 'home'},
         {name: 'Comunicados', link:'some-link', icon: 'campaign'},
         {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
         {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},
       ];
     }else if (perfil?.role === Roles.ZELADOR) {
       return [
-        {name: 'Home', link:'some-link', icon: 'home'},
+        {name: 'Home', link:'', icon: 'home'},
         {name: 'Usuários', link:'some-link', icon: 'person'},
-        {name: 'Condomínio', link:'some-link', icon: 'apartment', subMenus: [
+        {name: 'Condomínio', icon: 'apartment', subMenus: [
             {name: 'Blocos', link: 'some-link', img: 'assets/img/edificios.png'},
             {name: 'Unidades', link: 'some-link', icon: 'maps_home_work'},
             {name: 'Áreas Comuns', link: 'some-link', icon: 'deck'},

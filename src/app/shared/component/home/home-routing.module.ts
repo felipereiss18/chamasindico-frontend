@@ -13,6 +13,12 @@ const homeRoute: Routes = [
         path: '',
         loadChildren: () => import('../../../components/tela-inicial/tela-inicial.module').then(m => m.TelaInicialModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'condominio',
+        loadChildren: () => import('../../../components/condominio/condominio.module')
+          .then(m => m.CondominioModule),
+        canActivate: [AuthGuard]
       }
     ]
   }

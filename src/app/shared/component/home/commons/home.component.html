@@ -5,7 +5,8 @@
   </mat-sidenav>
   <mat-sidenav-content [@onMainContentChange]="onSideNavChange ? 'open': 'close'">
     <div class="main_content">
-      <div style="padding: 20px">
+      <ngx-loading-bar [fixed]="false" height="0.3em" [includeSpinner]="false"></ngx-loading-bar>
+      <div style="padding: 1.2em">
         <router-outlet></router-outlet>
       </div>
     </div>

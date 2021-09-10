@@ -1,0 +1,212 @@
+<form [formGroup]="formularioCondominio" class="w-100">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <p class="fs-4 fw-bold mb-4">{{title}}</p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+    <mat-card class="w-100">
+      <mat-card-title>
+        <p class="fs-5 fw-bold">Dados Gerais</p>
+      </mat-card-title>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" >
+          <mat-form-field class="mat-form-field w-75" appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input class="mat-input-element" matInput formControlName="nome" autocomplete="off" required>
+            <mat-error *ngIf="formularioCondominio.controls.nome.invalid">
+              {{getMessageError(formularioCondominio.controls.nome)}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mat-form-field w-25" appearance="outline">
+            <mat-label>CNPJ</mat-label>
+            <input class="mat-input-element" matInput formControlName="cnpj" autocomplete="off" required>
+            <mat-error *ngIf="formularioCondominio.controls.cnpj.invalid">
+              {{getMessageError(formularioCondominio.controls.cnpj)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="w-100">
+      <mat-card-title>
+        <p class="fs-5 fw-bold">Endereço</p>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" fxLayoutAlign="start center">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+          <mat-form-field class="mat-form-field w-25" appearance="outline">
+            <mat-label>CEP</mat-label>
+            <input matInput class="mat-input-element" formControlName="cep" autocomplete="off" mask="00000-000"
+              (blur)="buscarCep($event)" required>
+            <mat-error *ngIf="formularioCondominio.controls.cep.invalid">
+              {{getMessageError(formularioCondominio.controls.cep)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+          <mat-form-field class="mat-form-field w-100" appearance="outline">
+            <mat-label>Descrição</mat-label>
+            <input matInput class="mat-input-element" formControlName="endereco" autocomplete="off" required>
+            <mat-error *ngIf="formularioCondominio.controls.endereco.invalid">
+              {{getMessageError(formularioCondominio.controls.endereco)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+          <mat-form-field class="mat-form-field" style="width: 32%" appearance="outline">
+            <mat-label>Número</mat-label>
+            <input matInput class="mat-input-element" formControlName="numero" autocomplete="off" required>
+            <mat-error *ngIf="formularioCondominio.controls.numero.invalid">
+              {{getMessageError(formularioCondominio.controls.numero)}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mat-form-field" style="width: 67%" appearance="outline">
+            <mat-label>Complemento</mat-label>
+            <input matInput class="mat-input-element" formControlName="complemento" autocomplete="off">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+          <mat-form-field class="mat-form-field" style="width: 33%" appearance="outline">
+            <mat-label>Bairro</mat-label>
+            <input matInput class="mat-input-element" formControlName="bairro" autocomplete="off" required>
+            <mat-error *ngIf="formularioCondominio.controls.bairro.invalid">
+              {{getMessageError(formularioCondominio.controls.bairro)}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mat-form-field" style="width: 33%;" appearance="outline">
+            <mat-label>Cidade</mat-label>
+            <input matInput class="mat-input-element" formControlName="cidade" autocomplete="off" required>
+            <mat-error *ngIf="formularioCondominio.controls.cidade.invalid">
+              {{getMessageError(formularioCondominio.controls.cidade)}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mat-form-field" style="width: 34%;" appearance="outline">
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="estado" id="estado" matTooltip="Estado" required>
+              <mat-option></mat-option>
+              <mat-option *ngFor="let estado of estados" [value]="estado.id" [id]="estado.id">
+                {{estado.id}} - {{estado.nome}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formularioCondominio.controls.estado.invalid">
+              {{getMessageError(formularioCondominio.controls.estado)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="w-100" [style]="blocosInvalid">
+      <mat-card-title>
+        <p class="fw-bold fs-5">Blocos</p>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" fxLayoutAlign="start" fxLayoutGap="1em">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100" *ngIf="!visualizar">
+          <mat-form-field class="mat-form-field" appearance="outline" style="width: 33%">
+            <mat-label>Nome</mat-label>
+            <input matInput class="mat-input-element" [formControl]="bloco" autocomplete="off">
+            <mat-error *ngIf="bloco.invalid">
+              {{getMessageError(bloco)}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mat-form-field" appearance="outline" style="width: 33%">
+            <mat-label>Qtd. Andares</mat-label>
+            <input matInput class="mat-input-element" [formControl]="qtdAndares" autocomplete="off" type="number">
+            <mat-error *ngIf="qtdAndares.invalid">
+              {{getMessageError(qtdAndares)}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mat-form-field" appearance="outline" style="width: 33%">
+            <mat-label>Qtd. Unidade por Andar</mat-label>
+            <input matInput class="mat-input-element" [formControl]="qtdUnidade" autocomplete="off" type="number">
+            <mat-error *ngIf="qtdUnidade.invalid">
+              {{getMessageError(qtdUnidade)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1em" class="w-100" *ngIf="!visualizar">
+          <button mat-raised-button (click)="adicionar()" type="button">
+            Adicionar
+          </button>
+          <button mat-raised-button color="primary" (click)="showLoading();adicionarComUnidade()" type="button">
+            Adicionar com Unidade
+          </button>
+        </div>
+        <mat-tab-group class="w-100" *ngIf="blocos && blocos.length > 0;">
+          <mat-tab *ngFor="let bloco of blocos; index as i">
+            <ng-template mat-tab-label>
+              <div class="col" style="margin-left: 20px;">{{bloco.id}}</div>
+                <mat-icon (click)="excluirBloco(i)" class="position-absolute top-50 start-100 translate-middle"
+                          style="left: 90%!important;cursor: pointer">
+                  delete
+                </mat-icon>
+            </ng-template>
+            <div class="mat-elevation-z2 m-2 table-container">
+              <table mat-table [dataSource]="bloco.unidades" class="w-100" datapagesize="10"
+                     *ngIf="bloco.unidades && bloco.unidades.length > 0" #tableUnidade>
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef>Nº</th>
+                  <td mat-cell *matCellDef="let uni">
+                    <mat-form-field appearance="standard" class="w-75">
+                       <input matInput type="number" [(ngModel)]="uni['id']" [ngModelOptions]="{standalone: true}"
+                              [disabled]="visualizar">
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="banheiros">
+                  <th mat-header-cell *matHeaderCellDef>Banheiros</th>
+                  <td mat-cell *matCellDef="let uni">
+                    <mat-form-field appearance="standard" class="w-75">
+                      <input matInput type="number" [(ngModel)]="uni['banheiros']" [ngModelOptions]="{standalone: true}"
+                             [disabled]="visualizar">
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="metragem">
+                  <th mat-header-cell *matHeaderCellDef>Metragem</th>
+                  <td mat-cell *matCellDef="let uni">
+                    <mat-form-field appearance="standard" class="w-75">
+                      <input matInput type="number" [(ngModel)]="uni['metragem']" [ngModelOptions]="{standalone: true}"
+                             [disabled]="visualizar">
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="quartos">
+                  <th mat-header-cell *matHeaderCellDef>Quartos</th>
+                  <td mat-cell *matCellDef="let uni">
+                    <mat-form-field appearance="standard" class="w-75">
+                      <input matInput type="number" [(ngModel)]="uni['quartos']" [ngModelOptions]="{standalone: true}"
+                             [disabled]="visualizar">
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="acao">
+                  <th mat-header-cell *matHeaderCellDef>Ações</th>
+                  <td mat-cell *matCellDef="let uni;let i = index;">
+                    <button type="button" style="color:black" mat-icon-button [disabled]="visualizar"
+                            (click)="excluirUnidade(i, bloco); tableUnidade.renderRows()">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <button type="button" style="color:black" mat-icon-button [disabled]="visualizar"
+                            (click)="adicionarUnidade(i, bloco); tableUnidade.renderRows()">
+                      <mat-icon>playlist_add</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsTableUnidade"></tr>
+                <tr mat-row *matRowDef="let uni; let index = index; columns: columnsTableUnidade;"></tr>
+              </table>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+      <button mat-raised-button routerLink="/condominio" type="button">
+        Voltar
+      </button>
+      <button mat-raised-button color="primary" type="button" (click)="salvar()" *ngIf="!visualizar">
+        Salvar
+      </button>
+    </div>
+  </div>
+</form>
