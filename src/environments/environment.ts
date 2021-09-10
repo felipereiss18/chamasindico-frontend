@@ -5,6 +5,22 @@
 export const environment = {
   production: false,
   api: 'http://localhost:8080/chamasindico/',
+  apiCep: 'https://viacep.com.br/ws/',
+  LINEAR_MAT_STEPPER: false,
+  meses: [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro'
+  ],
 };
 
 /*
