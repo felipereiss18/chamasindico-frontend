@@ -1,0 +1,13 @@
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.table-container {
+  width: 98%;
+  max-height: 40em;
+  overflow-scrolling: auto;
+}
+
+::ng-deep .mat-tab-label {
+  cursor: default !important;
+}
