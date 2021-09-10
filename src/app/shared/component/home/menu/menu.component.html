@@ -14,17 +14,23 @@
     <div>
       <mat-nav-list>
         <ng-container *ngFor="let menu of menus">
-          <a mat-list-item (click)="abrirSubMenus(menu)">
-            <mat-icon style="padding-right: 5px;" *ngIf="menu?.icon">{{menu?.icon}}</mat-icon>
-            <img style="padding-right: 5px;" *ngIf="menu?.img" src="{{menu?.img}}">
-            <span [@animateText]="linkText ? 'show' : 'hide'">{{menu?.name}}</span>
+          <a mat-list-item *ngIf="!menu.subMenus" routerLink="{{menu.link}}">
+            <mat-icon style="padding-right: 1em;" *ngIf="menu?.icon">{{menu?.icon}}</mat-icon>
+            <img style="padding-right: 1em;" *ngIf="menu?.img" src="{{menu?.img}}">
+            <span [@animateText]="linkText ? 'show' : 'hide'" style="margin-left: 0.5em">{{menu?.name}}</span>
+          </a>
+          <a mat-list-item (click)="abrirSubMenus(menu)" *ngIf="menu.subMenus">
+            <mat-icon style="padding-right: 1em;" *ngIf="menu?.icon">{{menu?.icon}}</mat-icon>
+            <img style="padding-right: 1em;" *ngIf="menu?.img" src="{{menu?.img}}">
+            <span [@animateText]="linkText ? 'show' : 'hide'" style="margin-left: 0.5em">{{menu?.name}}</span>
           </a>
           <ng-container *ngIf="menu.subMenus && menu.openSubMenus">
-            <a mat-list-item *ngFor="let subMenus of menu.subMenus">
-              <mat-icon style="padding-left: 10px; padding-right: 5px;" *ngIf="subMenus?.icon">{{subMenus?.icon}}</mat-icon>
-              <img style="padding-left: 10px; padding-right: 5px;" *ngIf="subMenus?.img" src="{{subMenus?.img}}"
+            <a mat-list-item *ngFor="let subMenus of menu.subMenus" routerLink="{{subMenus.link}}"
+              fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" style="padding-left: 1em">
+              <mat-icon style="" *ngIf="subMenus?.icon">{{subMenus?.icon}}</mat-icon>
+              <img style="" *ngIf="subMenus?.img" src="{{subMenus?.img}}"
                    width="24px" height="24px">
-              <span [@animateText]="linkText ? 'show' : 'hide'">{{subMenus?.name}}</span>
+              <span [@animateText]="linkText ? 'show' : 'hide'" style="margin-left: 0.5em">{{subMenus?.name}}</span>
             </a>
           </ng-container>
         </ng-container>

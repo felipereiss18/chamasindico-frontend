@@ -1,13 +1,13 @@
-<mat-toolbar>
+<mat-toolbar fxLayout="row" fxLayoutAlign="start center">
   <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="start center">
     <button mat-icon-button (click)="menu.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
   </div>
   <span style="margin-left: 40%">Chama o Síndico</span>
-  <div style="width: 50%" fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="end center">
+  <div style="width: 50%" fxLayout="row" fxLayoutAlign="end">
     <button mat-icon-button (click)="logOff()">
-      <mat-icon><img src="assets/img/logoff.svg"></mat-icon>
+      <img src="assets/img/logoff.svg" width="24" height="24">
     </button>
   </div>
 </mat-toolbar>
