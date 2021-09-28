@@ -7,21 +7,29 @@
       <form [formGroup]="consultarForm" (ngSubmit)="pesquisar()">
           <div class="mat-elevation-z0" style="margin-bottom: 5%;">
             <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" style="width: 100%; padding-bottom: 2%; padding-top: 2%">
-              <mat-form-field class="mat-form-field" style="width: 40%;" appearance="outline">
+              <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
                 <mat-label>Nome</mat-label>
                 <input class="mat-input-element" matInput formControlName="nome" autocomplete="off">
               </mat-form-field>
-              <mat-form-field class="mat-form-field" style="width: 25%;" appearance="outline">
+              <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
                 <mat-label>Cidade</mat-label>
                 <input class="mat-input-element" matInput formControlName="cidade" autocomplete="off">
               </mat-form-field>
-              <mat-form-field class="mat-form-field" style="width: 25%;" appearance="outline">
+              <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
                 <mat-label>Estado</mat-label>
                 <mat-select formControlName="estado" id="estado" matTooltip="Estado">
                   <mat-option></mat-option>
                   <mat-option *ngFor="let estado of estados" [value]="estado.id" [id]="estado.id">
                     {{estado.id}} - {{estado.nome}}
                   </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+                <mat-label>Situação</mat-label>
+                <mat-select formControlName="situacao" id="situacao" matTooltip="Situação">
+                  <mat-option></mat-option>
+                  <mat-option value="true">Ativo</mat-option>
+                  <mat-option value="false">Inativo</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -44,7 +52,7 @@
             </ng-container>
             <ng-container matColumnDef="cnpj">
               <mat-header-cell *matHeaderCellDef>CPNJ</mat-header-cell>
-              <mat-cell *matCellDef="let condominio">{{condominio.cnpj}}</mat-cell>
+              <mat-cell *matCellDef="let condominio">{{condominio.cnpj | mask: '00.000.000/0000-00'}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="cidade">
               <mat-header-cell *matHeaderCellDef>Cidade</mat-header-cell>
@@ -56,7 +64,23 @@
             </ng-container>
             <ng-container matColumnDef="acoes">
               <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
-              <mat-cell  *matCellDef="let condominio"></mat-cell>
+              <mat-cell  *matCellDef="let condominio">
+                <fa-icon [icon]="faEdit" title="Editar" style="font-size: 21px;cursor: pointer"
+                         (click)="editar(condominio.id)">
+                </fa-icon>
+                <mat-icon title="Visualizar" [inline]="true" style="font-size: 24px;cursor: pointer"
+                          (click)="visualizar(condominio.id)">
+                  feed_outline
+                </mat-icon>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="alterStatus">
+              <mat-header-cell *matHeaderCellDef>Ativar/Inativar</mat-header-cell>
+              <mat-cell *matCellDef="let condominio">
+                <mat-slide-toggle (change)="alterarSituacao(condominio.id, $event)" [checked]="condominio.situacao"
+                                  color="primary">
+                </mat-slide-toggle>
+              </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></mat-header-row>
             <mat-row *matRowDef="let condominio; columns: displayColumns;"></mat-row>

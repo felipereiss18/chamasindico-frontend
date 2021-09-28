@@ -15,6 +15,7 @@ import {AuthGuard} from "./core/auth/auth.guard";
 import {HomeModule} from "./shared/component/home/home.module";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {SnotifyModule, SnotifyService, ToastDefaults} from "ng-snotify";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -27,6 +28,7 @@ const maskConfig: Partial<IConfig> = {
   ],
   imports: [
     BrowserModule,
+    FontAwesomeModule,
     BrowserAnimationsModule,
     CoreModule,
     BrowserModule,

@@ -5,8 +5,12 @@
 
   <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
     <mat-card class="w-100">
-      <mat-card-title>
-        <p class="fs-5 fw-bold">Dados Gerais</p>
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados Gerais</p>
+        <mat-chip-list *ngIf="id">
+          <mat-chip [ngClass]="situacao ? 'ativo' : 'inativo'">{{situacao ? 'Ativo' : 'Inativo'}}
+          </mat-chip>
+        </mat-chip-list>
       </mat-card-title>
       <mat-card-content>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" >
@@ -19,9 +23,10 @@
           </mat-form-field>
           <mat-form-field class="mat-form-field w-25" appearance="outline">
             <mat-label>CNPJ</mat-label>
-            <input class="mat-input-element" matInput formControlName="cnpj" autocomplete="off" required>
+            <input class="mat-input-element" matInput formControlName="cnpj" autocomplete="off"
+                   required mask="00.000.000/0000-00">
             <mat-error *ngIf="formularioCondominio.controls.cnpj.invalid">
-              {{getMessageError(formularioCondominio.controls.cnpj)}}
+              {{getMessageError(formularioCondominio.controls.cnpj, 'CNPJ')}}
             </mat-error>
           </mat-form-field>
         </div>
@@ -38,7 +43,7 @@
             <input matInput class="mat-input-element" formControlName="cep" autocomplete="off" mask="00000-000"
               (blur)="buscarCep($event)" required>
             <mat-error *ngIf="formularioCondominio.controls.cep.invalid">
-              {{getMessageError(formularioCondominio.controls.cep)}}
+              {{getMessageError(formularioCondominio.controls.cep, 'CEP')}}
             </mat-error>
           </mat-form-field>
         </div>
@@ -135,7 +140,7 @@
             <ng-template mat-tab-label>
               <div class="col" style="margin-left: 20px;">{{bloco.id}}</div>
                 <mat-icon (click)="excluirBloco(i)" class="position-absolute top-50 start-100 translate-middle"
-                          style="left: 90%!important;cursor: pointer">
+                          style="left: 90%!important;cursor: pointer" *ngIf="!visualizar">
                   delete
                 </mat-icon>
             </ng-template>
@@ -178,7 +183,7 @@
                     </mat-form-field>
                   </td>
                 </ng-container>
-                <ng-container matColumnDef="acao">
+                <ng-container matColumnDef="acao" *ngIf="!visualizar">
                   <th mat-header-cell *matHeaderCellDef>Ações</th>
                   <td mat-cell *matCellDef="let uni;let i = index;">
                     <button type="button" style="color:black" mat-icon-button [disabled]="visualizar"

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Estado} from "../../../models/estado";
 import {Bloco} from "../../../models/bloco";
 import {Unidade} from "../../../models/unidade";
@@ -9,6 +9,8 @@ import {CepService} from "../../../services/cep/cep.service";
 import {EstadoService} from "../../../services/estado/estado.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {SnotifyService} from "ng-snotify";
+import {CondominioService} from "../../../services/condominio/condominio.service";
+import {Condominio} from "../../../models/condominio";
 
 
 @Component({
@@ -19,6 +21,7 @@ import {SnotifyService} from "ng-snotify";
 export class FormularioCondominioComponent extends BasicComponent implements OnInit {
 
   title;
+  id: number;
   private tipo: number;
   columnsTableUnidade: string[] = ['id', 'banheiros', 'metragem', 'quartos', 'acao']
 
@@ -30,6 +33,7 @@ export class FormularioCondominioComponent extends BasicComponent implements OnI
   qtdUnidade: FormControl;
   blocosInvalid = ''
   visualizar: boolean;
+  situacao = true;
 
   constructor(
     private readonly router: Router,
@@ -37,15 +41,20 @@ export class FormularioCondominioComponent extends BasicComponent implements OnI
     private readonly formBuilder: FormBuilder,
     private cepService: CepService,
     private estadoService: EstadoService,
+    private condominioService: CondominioService,
     spinnerService: NgxSpinnerService,
     snotifyService: SnotifyService,
   ) {
     super(spinnerService, snotifyService);
     this.title = activeRoute.snapshot.data['title'] + ' Condomínio';
     this.tipo = activeRoute.snapshot.data['tipo'];
+    this.id = Number(this.activeRoute.snapshot.paramMap.get('id'));
 
     this.visualizar = this.tipo === 3;
 
+    if (this.visualizar) {
+      this.columnsTableUnidade = ['id', 'banheiros', 'metragem', 'quartos']
+    }
     this.bloco = new FormControl( {value: '', disabled: this.visualizar}, Validators.required);
     this.qtdAndares = new FormControl({value: '', disabled: this.visualizar}, Validators.required);
     this.qtdUnidade = new FormControl({value: '', disabled: this.visualizar}, Validators.required);
@@ -73,6 +82,24 @@ export class FormularioCondominioComponent extends BasicComponent implements OnI
       estado: [{value: '', disabled: this.visualizar}, Validators.required],
       blocos: [this.blocos.length, Validators.min(1)],
     })
+
+    if (this.id) {
+      this.condominioService.findOne(this.id).subscribe(
+        res => {
+          this.formularioCondominio.patchValue(res.data);
+          this.formularioCondominio.get('estado')?.setValue(res.data.estado?.id);
+          if (res.data.situacao !== undefined) {
+            this.situacao = res.data.situacao
+          }
+          if(res.data.blocos) {
+            this.blocos = res.data.blocos;
+          }
+        }, error => {
+          console.error(error);
+          this.messageError('Não foi possível carregar as informações do condomínio.');
+        }
+      )
+    }
   }
 
   adicionarComUnidade(): void {
@@ -167,6 +194,51 @@ export class FormularioCondominioComponent extends BasicComponent implements OnI
   salvar(): void {
     this.formularioCondominio.markAllAsTouched();
     this.verificarBlocos();
+    if (this.formularioCondominio.valid){
+      const condominio = new Condominio(
+        this.id ? this.id : undefined,
+        this.formularioCondominio.controls.nome.value,
+        this.formularioCondominio.controls.cnpj.value,
+        this.formularioCondominio.controls.cep.value,
+        this.formularioCondominio.controls.endereco.value,
+        this.formularioCondominio.controls.bairro.value,
+        this.formularioCondominio.controls.numero.value,
+        this.formularioCondominio.controls.complemento.value,
+        this.formularioCondominio.controls.cidade.value,
+        new Estado(this.formularioCondominio.controls.estado.value),
+        this.blocos
+      );
+
+      if(this.id){
+        this.edit(this.id, condominio);
+      }else {
+        this.save(condominio);
+      }
+    }
+  }
+
+  private save(condominio: Condominio): void {
+    this.condominioService.save(condominio).subscribe(
+      (res) => {
+        this.messageSucess('Condomínio salvo com sucesso!');
+        this.router.navigate(['condominio']);
+      }, error => {
+        console.error(error);
+        this.messageError('Ocorreu um erro no salvar condomínio.')
+      }
+    )
+  }
+
+  private edit(id: number, condominio: Condominio): void {
+    this.condominioService.update(id, condominio).subscribe(
+      res => {
+        this.messageSucess('Condomínio alterado com sucesso!');
+        this.router.navigate(['condominio']);
+      }, error => {
+        console.error(error);
+        this.messageError('Ocorreu um erro no alterar condomínio.')
+      }
+    )
   }
 
   verificarBlocos(): void {
@@ -180,7 +252,6 @@ export class FormularioCondominioComponent extends BasicComponent implements OnI
 
   buscarCep(cep: any) {
     if(cep && cep.target.value.length > 8) {
-      this.showLoading();
       this.cepService.getCep(cep.target.value).subscribe((res) => {
           if (res) {
             this.formularioCondominio.controls['endereco'].setValue(res.logradouro);
@@ -189,11 +260,9 @@ export class FormularioCondominioComponent extends BasicComponent implements OnI
             this.formularioCondominio.controls['cidade'].setValue(res.localidade);
             this.formularioCondominio.controls['estado'].setValue(res.uf);
           }
-          this.closeLoading();
         },
         error => {
           console.error(error);
-          this.closeLoading();
         });
     }
   }
