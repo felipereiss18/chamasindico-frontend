@@ -8,6 +8,16 @@
   overflow-scrolling: auto;
 }
 
+.ativo {
+  background-color: darkgreen;
+  color: whitesmoke;
+}
+
+.inativo {
+  background-color: darkred;
+  color: whitesmoke;
+}
+
 ::ng-deep .mat-tab-label {
   cursor: default !important;
 }

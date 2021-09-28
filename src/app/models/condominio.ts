@@ -8,10 +8,12 @@ export class Condominio {
   cep: string | undefined;
   endereco: string | undefined;
   bairro: string | undefined;
+  numero: string | undefined;
   complemento: string | undefined;
   cidade: string | undefined;
   estado: Estado | undefined;
   blocos: Bloco[] | undefined;
+  situacao: boolean | undefined;
 
 
   constructor(id?: number,
@@ -20,6 +22,7 @@ export class Condominio {
               cep?: string,
               endereco?: string,
               bairro?: string,
+              numero?: string,
               complemento?: string,
               cidade?: string,
               estado?: Estado,
@@ -30,6 +33,7 @@ export class Condominio {
     this.cep = cep;
     this.endereco = endereco;
     this.bairro = bairro;
+    this.numero = numero;
     this.complemento = complemento;
     this.cidade = cidade;
     this.estado = estado;

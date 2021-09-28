@@ -35,7 +35,7 @@ export class BaseService<T, ID> extends CrudService<T, ID> {
       catchError(this.handleError));
   }
 
-  post(t: T, urlComplemento?: string, options?: { headers: HttpHeaders }) {
+  post(t: T, urlComplemento?: string, options?: { headers: HttpHeaders, params?: HttpParams}) {
     this.resolveOptions(options);
     const complemento = urlComplemento !== undefined ? urlComplemento : '';
     return this.http.post(this.base + complemento, t, options)

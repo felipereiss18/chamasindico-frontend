@@ -8,6 +8,7 @@ import {HeaderComponent} from "./header/header.component";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {LoadingBarRouterModule} from "@ngx-loading-bar/router";
 import {LoadingBarModule} from "@ngx-loading-bar/core";
+import {SharedModule} from "../../shared.module";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {LoadingBarModule} from "@ngx-loading-bar/core";
         FontAwesomeModule,
         LoadingBarRouterModule,
         LoadingBarModule,
+        SharedModule,
     ]
 })
 export class HomeModule { }

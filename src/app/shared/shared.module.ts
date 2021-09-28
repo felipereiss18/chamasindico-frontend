@@ -6,17 +6,19 @@ import {NgxMaskModule} from "ngx-mask";
 import {NgxEditorModule} from "ngx-editor";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 import localePT from '@angular/common/locales/pt';
+import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
 
 registerLocaleData(localePT, 'pt-BR');
 
 @NgModule({
   declarations: [
-
+    ConfirmDialogComponent
   ],
   exports: [
     AppMaterialModule
     , FormsModule
-    , ReactiveFormsModule
+    , ReactiveFormsModule,
+    ConfirmDialogComponent
   ],
   imports: [
     FormsModule

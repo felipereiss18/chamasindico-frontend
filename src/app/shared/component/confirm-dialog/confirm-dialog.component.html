@@ -1,0 +1,12 @@
+<h4 mat-dialog-title>
+  {{title}}
+</h4>
+
+<div mat-dialog-content>
+  <p>{{message}}</p>
+</div>
+
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em">
+  <button mat-raised-button (click)="onCancel()">Não</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()">Sim</button>
+</div>
