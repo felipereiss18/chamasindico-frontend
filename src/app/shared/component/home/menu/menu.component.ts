@@ -64,14 +64,14 @@ export class MenuComponent implements OnInit {
             {name: 'Blocos', link: 'some-link', img: 'assets/img/edificios.png'},
             {name: 'Unidades', link: 'some-link', icon: 'maps_home_work'},
             {name: 'Áreas Comuns', link: 'some-link', icon: 'deck'},
-            {name: 'Usuários', link:'some-link', icon: 'person'},
+            {name: 'Usuários', link:'usuario', icon: 'person'},
           ]},
       ];
     }else if (perfil?.role === Roles.SINDICO) {
       return [
         {name: 'Home', link:'', icon: 'home'},
         {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
-        {name: 'Usuários', link:'some-link', icon: 'person'},
+        {name: 'Usuários', link:'usuario', icon: 'person'},
         {name: 'Condomínio', icon: 'apartment',
           subMenus: [
             {name: 'Blocos', link: 'some-link', img: 'assets/img/edificios.png'},
@@ -115,7 +115,7 @@ export class MenuComponent implements OnInit {
     }else if (perfil?.role === Roles.ZELADOR) {
       return [
         {name: 'Home', link:'', icon: 'home'},
-        {name: 'Usuários', link:'some-link', icon: 'person'},
+        {name: 'Usuários', link:'usuario', icon: 'person'},
         {name: 'Condomínio', icon: 'apartment', subMenus: [
             {name: 'Blocos', link: 'some-link', img: 'assets/img/edificios.png'},
             {name: 'Unidades', link: 'some-link', icon: 'maps_home_work'},

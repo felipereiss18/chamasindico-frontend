@@ -30,6 +30,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @NgModule({
   exports: [
@@ -65,7 +66,8 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatCheckboxModule,
     MatTabsModule,
     MatProgressBarModule,
-    MatIconModule
+    MatIconModule,
+    MatSlideToggleModule
   ],
   providers:[
     { provide: MAT_DATE_LOCALE, useValue:'pt-BR' },

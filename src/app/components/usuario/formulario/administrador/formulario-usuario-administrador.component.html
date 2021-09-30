@@ -1,0 +1,50 @@
+<form [formGroup]="formUsuario" class="w-100">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <p class="fs-4 fw-bold mb-4">{{title}}</p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados Gerais</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <mat-form-field class="mat-form-field" fxFlex="30" appearance="outline">
+            <mat-label>Usuário</mat-label>
+            <input class="mat-input-element" matInput formControlName="usuario" autocomplete="off" required>
+            <mat-error *ngIf="formUsuario.controls.usuario.invalid">
+              {{getMessageError(formUsuario.controls.usuario)}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mat-form-field" fxFlex="35" appearance="outline" *ngIf="!this.id">
+            <mat-label>Senha</mat-label>
+            <input class="mat-input-element" matInput formControlName="senha" autocomplete="off"
+                   type="password">
+            <mat-error *ngIf="formUsuario.controls.senha.invalid">
+              {{getMessageError(formUsuario.controls.senha)}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mat-form-field" fxFlex="35" appearance="outline" *ngIf="!this.id">
+            <mat-label>Confirma Senha</mat-label>
+            <input class="mat-input-element" matInput formControlName="confirmaSenha" autocomplete="off"
+                   type="password">
+            <mat-error *ngIf="formUsuario.controls.confirmaSenha.invalid">
+              {{getMessageError(formUsuario.controls.confirmaSenha, 'Senha')}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+      <button mat-raised-button routerLink="/usuario" type="button">
+        Voltar
+      </button>
+      <button mat-raised-button color="primary" type="button" (click)="salvar()">
+        Salvar
+      </button>
+    </div>
+  </div>
+</form>

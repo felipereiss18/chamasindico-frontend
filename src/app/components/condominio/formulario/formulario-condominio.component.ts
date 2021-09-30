@@ -11,6 +11,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {SnotifyService} from "ng-snotify";
 import {CondominioService} from "../../../services/condominio/condominio.service";
 import {Condominio} from "../../../models/condominio";
+import {UserService} from "../../../core/auth/user/user.service";
 
 
 @Component({
@@ -44,8 +45,9 @@ export class FormularioCondominioComponent extends BasicComponent implements OnI
     private condominioService: CondominioService,
     spinnerService: NgxSpinnerService,
     snotifyService: SnotifyService,
+    userService: UserService
   ) {
-    super(spinnerService, snotifyService);
+    super(spinnerService, snotifyService, userService);
     this.title = activeRoute.snapshot.data['title'] + ' Condomínio';
     this.tipo = activeRoute.snapshot.data['tipo'];
     this.id = Number(this.activeRoute.snapshot.paramMap.get('id'));
@@ -220,7 +222,7 @@ export class FormularioCondominioComponent extends BasicComponent implements OnI
   private save(condominio: Condominio): void {
     this.condominioService.save(condominio).subscribe(
       (res) => {
-        this.messageSucess('Condomínio salvo com sucesso!');
+        this.messageSucess('Condomínio salvo com sucesso.');
         this.router.navigate(['condominio']);
       }, error => {
         console.error(error);
@@ -232,7 +234,7 @@ export class FormularioCondominioComponent extends BasicComponent implements OnI
   private edit(id: number, condominio: Condominio): void {
     this.condominioService.update(id, condominio).subscribe(
       res => {
-        this.messageSucess('Condomínio alterado com sucesso!');
+        this.messageSucess('Condomínio alterado com sucesso.');
         this.router.navigate(['condominio']);
       }, error => {
         console.error(error);

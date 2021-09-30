@@ -19,6 +19,12 @@ const homeRoute: Routes = [
         loadChildren: () => import('../../../components/condominio/condominio.module')
           .then(m => m.CondominioModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'usuario',
+        loadChildren: () => import('../../../components/usuario/usuario.module')
+          .then(m => m.UsuarioModule),
+        canActivate: [AuthGuard]
       }
     ]
   }
