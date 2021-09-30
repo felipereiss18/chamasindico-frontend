@@ -14,6 +14,7 @@ import {ConfirmationDialogModel} from "../../../shared/component/confirm-dialog/
 import {ConfirmDialogComponent} from "../../../shared/component/confirm-dialog/confirm-dialog.component";
 import {faEdit} from '@fortawesome/free-solid-svg-icons';
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
+import {UserService} from "../../../core/auth/user/user.service";
 
 @Component({
   selector: 'app-lista-condominio',
@@ -42,16 +43,17 @@ export class ListaCondominioComponent extends BasicComponent implements OnInit {
     private service: CondominioService,
     snipperService: NgxSpinnerService,
     snotifyService: SnotifyService,
+    userService: UserService,
     private dialog: MatDialog
   ) {
-    super(snipperService, snotifyService);
+    super(snipperService, snotifyService, userService);
     estadoService.gets('estados').subscribe(
       (res) => {
         this.estados = res.data
       },
       error => {
         this.messageError('Ocorreu um erro em buscar os Estados');
-        console.error(error)
+        console.error(error);
       }
     )
   }
@@ -75,13 +77,13 @@ export class ListaCondominioComponent extends BasicComponent implements OnInit {
         }
       }, error => {
         console.error(error);
-        this.messageError('Não foi possível realizar a pesquisa.')
+        this.messageError('Não foi possível realizar a pesquisa.');
       }
     )
   }
 
   adicionar(){
-    this.router.navigate(['condominio/adicionar'])
+    this.router.navigate(['condominio/adicionar']);
   }
 
   alterarSituacao(id: number, $event: any): void {

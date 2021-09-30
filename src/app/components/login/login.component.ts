@@ -5,6 +5,7 @@ import {AuthService} from "../../core/auth/auth.service";
 import {BasicComponent} from "../../shared/basic-component/basic-component";
 import {NgxSpinnerService} from "ngx-spinner";
 import {SnotifyService} from "ng-snotify";
+import {UserService} from "../../core/auth/user/user.service";
 
 @Component({
   selector: 'app-login',
@@ -26,8 +27,9 @@ export class LoginComponent extends BasicComponent implements OnInit {
     private readonly authService: AuthService,
     spinnerService: NgxSpinnerService,
     snotifyService: SnotifyService,
+    userService: UserService
   ) {
-    super(spinnerService, snotifyService);
+    super(spinnerService, snotifyService, userService);
   }
 
   ngOnInit(): void {
@@ -40,6 +42,9 @@ export class LoginComponent extends BasicComponent implements OnInit {
         .subscribe((res) => {
           this.router.navigate(['']);
           this.closeLoading();
+        }, error => {
+          const err = JSON.parse(error.error);
+          this.messageError(err.message);
         })
     }
   }

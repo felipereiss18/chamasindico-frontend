@@ -5,6 +5,7 @@ import {TokenService} from "../token/token.service";
 import jwt_decode from 'jwt-decode';
 import {UserToken} from "./user-token";
 import {Perfil} from "./perfil";
+import {PerfilService} from "../../../services/perfil/perfil.service";
 
 @Injectable({providedIn: "root"})
 export class UserService {
@@ -13,7 +14,7 @@ export class UserService {
   private userSubject = new BehaviorSubject<User>(null)
   private userName: string | undefined;
 
-  constructor(private tokenService: TokenService) {
+  constructor(private tokenService: TokenService, private perfilService: PerfilService) {
     this.tokenService.hasToken() && this.decodeAndNotify()
   }
 
@@ -35,7 +36,7 @@ export class UserService {
     user.id = Number(userToken.sub);
     user.nome = userToken.nome;
     user.usuario = userToken.username;
-    user.perfil = this.verificarPerfil(userToken.role)
+    user.perfil = userToken.perfil;
 
     this.userSubject.next(user);
   }
@@ -52,24 +53,5 @@ export class UserService {
 
   getUserName(){
     return this.userName;
-  }
-
-  private verificarPerfil(role: string): Perfil | null {
-    switch (role.toUpperCase()){
-      case 'ADMIN':
-        return {role: role, descricao: 'Administrador'};
-      case 'SINDICO':
-        return {role: role, descricao: 'Síndico'};
-      case 'PROPRIE':
-        return {role: role, descricao: 'Proprietário'}
-      case 'INQUILINO':
-        return {role: role, descricao: 'Inquilino'}
-      case 'PORTEIRO':
-        return {role: role, descricao: 'PORTEIRO'}
-      case 'ZELADOR':
-        return {role: role, descricao: 'Zelador'}
-    }
-
-    return null;
   }
 }
