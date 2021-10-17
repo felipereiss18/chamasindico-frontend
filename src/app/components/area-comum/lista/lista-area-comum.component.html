@@ -1,0 +1,115 @@
+<mat-card>
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <h2>Consultar Área Comum</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutAlign="space-between none" class="w-100">
+      <form [formGroup]="formConsulta" class="w-100" (ngSubmit)="pesquisar()">
+        <div class="mat-elevation-z0 mb-2">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100 pb-1 pt-1">
+            <mat-form-field appearance="outline" fxFlex="30">
+              <mat-label>Nome</mat-label>
+              <input matInput formControlName="nome" autocomplete="off">
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="15">
+              <mat-label>Locação</mat-label>
+              <mat-select formControlName="locacao">
+                <mat-option></mat-option>
+                <mat-option value="true">Sim</mat-option>
+                <mat-option value="false">Não</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="20">
+              <mat-label>Tipo Reserva</mat-label>
+              <mat-select formControlName="tipoReserva">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let tipo of tiposReserva" [value]="tipo.id">{{tipo.descricao}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="20">
+              <mat-label>Tipo Confirmação</mat-label>
+              <mat-select formControlName="tipoConfirmacao">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let tipo of tiposConfirmacao" [value]="tipo.id">{{tipo.descricao}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="15" appearance="outline">
+              <mat-label>Situação</mat-label>
+              <mat-select formControlName="situacao">
+                <mat-option></mat-option>
+                <mat-option value="true">Ativo</mat-option>
+                <mat-option value="false">Inativo</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="w-100 pb-1" fxLayout="row" fxLayoutGap="1.5em" fxLayoutAlign="end center">
+            <button mat-raised-button type="submit">
+              Pesquisar
+            </button>
+            <button mat-raised-button color="primary" routerLink="/area-comum/adicionar" type="button">
+              Nova Área Comum
+            </button>
+          </div>
+        </div>
+      </form>
+      <ng-container *ngIf="dataSource && dataSource.data.length != 0">
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="dataSource" class="w-100">
+            <ng-container matColumnDef="bloco">
+              <mat-header-cell *matHeaderCellDef>Bloco</mat-header-cell>
+              <mat-cell *matCellDef="let areaComum">{{areaComum.bloco}}</mat-cell>
+            </ng-container>
+             <ng-container matColumnDef="nome">
+              <mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
+              <mat-cell *matCellDef="let areaComum">{{areaComum.nome}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="locacao">
+              <mat-header-cell *matHeaderCellDef>Locação</mat-header-cell>
+              <mat-cell *matCellDef="let areaComum">{{areaComum.locacao ? 'Sim' : 'Não'}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="tipoReserva">
+              <mat-header-cell *matHeaderCellDef>Tipo Reserva</mat-header-cell>
+              <mat-cell *matCellDef="let areaComum">{{areaComum.tipoReserva}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="tipoConfirmacao">
+              <mat-header-cell *matHeaderCellDef>Tipo Confirmação</mat-header-cell>
+              <mat-cell *matCellDef="let areaComum">{{areaComum.tipoConfirmacao}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="inicial">
+              <mat-header-cell *matHeaderCellDef>Hora Inicial</mat-header-cell>
+              <mat-cell *matCellDef="let areaComum">{{areaComum.inicial}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="fim">
+              <mat-header-cell *matHeaderCellDef>Hora Final</mat-header-cell>
+              <mat-cell *matCellDef="let areaComum">{{areaComum.fim}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="acoes">
+              <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+              <mat-cell  *matCellDef="let areaComum">
+                <fa-icon [icon]="faEdit" title="Editar" style="font-size: 21px;cursor: pointer"
+                         routerLink="/area-comum/editar/{{areaComum.id}}">
+                </fa-icon>
+                <mat-icon title="Visualizar" [inline]="true" style="font-size: 24px;cursor: pointer"
+                          routerLink="/area-comum/detalhar/{{areaComum.id}}">
+                  feed_outline
+                </mat-icon>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="alterStatus">
+              <mat-header-cell *matHeaderCellDef>Ativar/Inativar</mat-header-cell>
+              <mat-cell *matCellDef="let areaComum">
+                <mat-slide-toggle (change)="alterarSituacao(areaComum.id, $event)" [checked]="areaComum.situacao"
+                                  color="primary">
+                </mat-slide-toggle>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let areaComum; columns: displayColumns;"></mat-row>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+

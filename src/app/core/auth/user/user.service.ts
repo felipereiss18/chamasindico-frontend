@@ -37,6 +37,7 @@ export class UserService {
     user.nome = userToken.nome;
     user.usuario = userToken.username;
     user.perfil = userToken.perfil;
+    user.condominio = userToken.condominio;
 
     this.userSubject.next(user);
   }

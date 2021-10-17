@@ -8,6 +8,7 @@ import {ResponseDto} from "../../interfaces/response-dto.interface";
 import {ResponsePagination} from "../../interfaces/response-pagination.interface";
 import {catchError} from "rxjs/operators";
 import {BaseService} from "../base-service";
+import {Bloco} from "../../models/bloco";
 
 interface CondominioPesquisa {
     cidade: string | undefined,
@@ -44,6 +45,11 @@ export class CondominioService extends BaseService<Condominio, number>{
 
   alterarSituacao(id: number, situacao: boolean): Observable<ResponseDto<any>> {
     return this.http.patch<ResponseDto<any>>(`${this.base}/${id}/situacao`, situacao, this.options)
+      .pipe(catchError(this.handleError));
+  }
+
+  buscarBlocos(id: number): Observable<ResponseDto<Bloco[]>> {
+    return this.http.get<ResponseDto<Bloco[]>>(`${this.base}/${id}/blocos`, this.options)
       .pipe(catchError(this.handleError));
   }
 }

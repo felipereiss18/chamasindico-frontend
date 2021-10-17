@@ -1,0 +1,123 @@
+<form [formGroup]="formAreaComum" class="w-100">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <p class="fs-4 fw-bold mb-4">{{title}}</p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados Gerais</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field class="mat-form-field" fxFlex="30" appearance="outline">
+              <mat-label>Bloco</mat-label>
+              <mat-select formControlName="bloco">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let bloco of blocos" [value]="bloco.id">{{bloco.id}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formAreaComum.controls.bloco.invalid">
+                {{getMessageError(formAreaComum.controls.bloco)}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="70" appearance="outline">
+              <mat-label>Nome</mat-label>
+              <input class="mat-input-element" matInput formControlName="nome" autocomplete="off" required
+                     type="text">
+              <mat-error *ngIf="formAreaComum.controls.nome.invalid">
+                {{getMessageError(formAreaComum.controls.nome)}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <section fxFlex="30" fxLayoutGap="1em">
+              <mat-label>Locação:</mat-label>
+              <mat-radio-group formControlName="locacao" fxLayoutGap="1em" (change)="onChangeLocacao($event)">
+                <mat-radio-button color="primary" [value]="true">Sim</mat-radio-button>
+                <mat-radio-button color="primary" [value]="false">Não</mat-radio-button>
+              </mat-radio-group>
+            </section>
+            <mat-form-field class="mat-form-field" fxFlex="10" appearance="outline">
+              <mat-label>Hora Inicial</mat-label>
+              <input matInput type="time" class="mat-input-element" formControlName="inicial" autocomplete="off"
+                [required]="requiredLocacao">
+              <mat-error *ngIf="formAreaComum.controls.inicial.invalid">
+                {{getMessageError(formAreaComum.controls.inicial)}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="10" appearance="outline">
+              <mat-label>Hora Final</mat-label>
+              <input matInput type="time" class="mat-input-element" formControlName="fim" autocomplete="off"
+                     [required]="requiredLocacao">
+              <mat-error *ngIf="formAreaComum.controls.fim.invalid">
+                {{getMessageError(formAreaComum.controls.fim)}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="25">
+              <mat-label>Tipo Reserva</mat-label>
+              <mat-select formControlName="tipoReserva" [required]="requiredLocacao">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let tipo of tiposReserva" [value]="tipo.id">{{tipo.descricao}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formAreaComum.controls.tipoReserva.invalid">
+                {{getMessageError(formAreaComum.controls.tipoReserva)}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="25">
+              <mat-label>Tipo Confirmação</mat-label>
+              <mat-select formControlName="tipoConfirmacao" [required]="requiredLocacao">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let tipo of tiposConfirmacao" [value]="tipo.id">{{tipo.descricao}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formAreaComum.controls.tipoConfirmacao.invalid">
+                {{getMessageError(formAreaComum.controls.tipoConfirmacao)}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <section fxLayout="column" fxLayoutGap="1em">
+              <mat-label>Dias de Funcionamento:</mat-label>
+              <div [style]="diasFuncionamentoInvalid">
+                <div fxLayout="row" fxLayoutGap="1em" class="p-1">
+                  <mat-checkbox *ngFor="let dia of diasSemanas" [value]="dia.id.toString()" [checked]="dia.value"
+                                (change)="onChangeDiaSemana($event)" color="primary"
+                    [disabled]="visualizar">
+                    {{dia.descricao}}
+                  </mat-checkbox>
+                </div>
+              </div>
+              <mat-error *ngIf="formAreaComum.controls.diasFuncionamento.invalid">
+                {{getMessageError(formAreaComum.controls.diasFuncionamento)}}
+              </mat-error>
+            </section>
+          </div>
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field appearance="outline" fxFlex="100">
+              <mat-label>Limpeza</mat-label>
+              <textarea matInput rows="10" maxlength="500" formControlName="limpeza" #textLimpeza></textarea>
+              <mat-hint align="end">{{textLimpeza.value.length}}/500</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field appearance="outline" fxFlex="100">
+              <mat-label>Anotação</mat-label>
+              <textarea matInput rows="10" maxlength="500" formControlName="anotacao" #textAnotacao></textarea>
+              <mat-hint align="end">{{textAnotacao.value.length}}/500</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+      <button mat-raised-button routerLink="/area-comum" type="button">
+        Voltar
+      </button>
+      <button mat-raised-button color="primary" type="button" (click)="salvar()" *ngIf="!this.visualizar">
+        Salvar
+      </button>
+    </div>
+  </div>
+</form>

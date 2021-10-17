@@ -25,6 +25,12 @@ const homeRoute: Routes = [
         loadChildren: () => import('../../../components/usuario/usuario.module')
           .then(m => m.UsuarioModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'area-comum',
+        loadChildren: () => import('../../../components/area-comum/area-comum.module')
+          .then(m => m.AreaComumModule),
+        canActivate: [AuthGuard]
       }
     ]
   }

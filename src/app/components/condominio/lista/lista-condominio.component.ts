@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {Condominio} from "../../../models/condominio";
 import {Router} from "@angular/router";
@@ -13,7 +13,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {ConfirmationDialogModel} from "../../../shared/component/confirm-dialog/model/confirmation-dialog.model";
 import {ConfirmDialogComponent} from "../../../shared/component/confirm-dialog/confirm-dialog.component";
 import {faEdit} from '@fortawesome/free-solid-svg-icons';
-import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 import {UserService} from "../../../core/auth/user/user.service";
 
 @Component({

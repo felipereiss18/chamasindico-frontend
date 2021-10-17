@@ -5,5 +5,6 @@ export interface UserToken {
   username: string;
   role: string;
   nome: string;
-  perfil: Perfil
+  perfil: Perfil;
+  condominio: number;
 }
