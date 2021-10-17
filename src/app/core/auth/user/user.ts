@@ -5,4 +5,5 @@ export interface User {
   usuario: string;
   nome: string
   perfil: Perfil | null;
+  condominio: number;
 }
