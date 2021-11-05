@@ -27,7 +27,7 @@ export abstract class CrudService<T, ID> implements ICrudService<T, ID> {
 
   save(t: T) {
 
-    return this.http.post<ResponseDto<T>>( this.base, t, this.options )
+    return this.http.post<ResponseDto<any>>( this.base, t, this.options )
       .pipe(
         catchError( this.handleError )
       );
@@ -59,14 +59,15 @@ export abstract class CrudService<T, ID> implements ICrudService<T, ID> {
   }
 
   protected handleError( error: HttpErrorResponse ) {
-    let msg: string;
+    let msg: ResponseDto<any> = {} as ResponseDto<any>;
 
     if ( error.error instanceof ErrorEvent ) {
-      msg = error.error.message;
+      msg.message = error.error.message;
     } else {
       msg = error.error;
     }
 
+    msg.statusError = error.status;
     return throwError( msg );
   }
 }

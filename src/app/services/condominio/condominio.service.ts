@@ -9,6 +9,7 @@ import {ResponsePagination} from "../../interfaces/response-pagination.interface
 import {catchError} from "rxjs/operators";
 import {BaseService} from "../base-service";
 import {Bloco} from "../../models/bloco";
+import {Proprietario} from "../../models/proprietario";
 
 interface CondominioPesquisa {
     cidade: string | undefined,
@@ -50,6 +51,11 @@ export class CondominioService extends BaseService<Condominio, number>{
 
   buscarBlocos(id: number): Observable<ResponseDto<Bloco[]>> {
     return this.http.get<ResponseDto<Bloco[]>>(`${this.base}/${id}/blocos`, this.options)
+      .pipe(catchError(this.handleError));
+  }
+
+  buscarSindico(id: number): Observable<ResponseDto<Proprietario>> {
+    return this.http.get<ResponseDto<Proprietario>>(`${this.base}/${id}/sindico`, this.options)
       .pipe(catchError(this.handleError));
   }
 }

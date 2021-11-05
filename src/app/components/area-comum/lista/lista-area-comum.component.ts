@@ -38,7 +38,6 @@ export class ListaAreaComumComponent extends BasicComponent implements OnInit {
     {id: 2, descricao: 'Requer Confirmação'},
     {id: 3, descricao: 'Não é necessário'},
   ];
-  private user = {} as User;
 
   constructor(
     private router: Router,
@@ -51,12 +50,6 @@ export class ListaAreaComumComponent extends BasicComponent implements OnInit {
     private dialog: MatDialog
   ) {
     super(spinnerService, snotifyService, userService);
-
-    userService.getUser().subscribe(
-      res => this.user = res,
-      error => {
-        console.error(error);
-      })
 
     this.formConsulta = formBuilder.group(
       {
