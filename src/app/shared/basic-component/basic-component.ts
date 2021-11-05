@@ -3,12 +3,14 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {SnotifyPosition, SnotifyService, SnotifyToast} from "ng-snotify";
 import {UserService} from "../../core/auth/user/user.service";
 import {User} from "../../core/auth/user/user";
+import {Roles} from "../../core/auth/user/roles.enum";
 
 export class BasicComponent {
   private spinnerService: NgxSpinnerService;
   private snotifyService: SnotifyService;
   private userService: UserService;
   protected timeoutMessage = 3000;
+  protected user = {} as User;
 
   constructor(
     spinnerService: NgxSpinnerService,
@@ -80,8 +82,19 @@ export class BasicComponent {
 
   public getUser(): User {
     let user = {} as User
-    this.userService.getUser().subscribe( res => user = res);
+    this.userService.getUser().subscribe( res => {
+      user = res
+      this.user = res;
+    });
 
     return user;
+  }
+
+  public isUserAdmin() {
+    return this.user.perfil?.role === Roles.ADMIN;
+  }
+
+  public isUserSindico() {
+    return this.user.perfil?.role === Roles.SINDICO;
   }
 }

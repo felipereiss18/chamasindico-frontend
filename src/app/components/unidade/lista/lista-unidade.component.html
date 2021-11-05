@@ -1,0 +1,82 @@
+<mat-card>
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <h2>Consultar Unidades</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutAlign="space-between none" class="w-100">
+      <form [formGroup]="consultarForm" (ngSubmit)="pesquisar()">
+        <div class="mat-elevation-z0 mb-2">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100 pb-2 pt-2" >
+            <mat-form-field class="mat-form-field" fxFlex="50" appearance="outline">
+              <mat-label>Condomínio</mat-label>
+              <mat-select formControlName="condominio" (selectionChange)="carregarBlocos($event.value)">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let condominio of condominios" [value]="condominio.id">
+                  {{condominio.nome}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Blocos</mat-label>
+              <mat-select formControlName="bloco">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let bloco of blocos" [value]="bloco.id">
+                  {{bloco.id}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Unidade</mat-label>
+              <input matInput type="number" formControlName="unidade" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="w-100 pb-1" fxLayout="row" fxLayoutGap="1.5em" fxLayoutAlign="end center">
+            <button mat-raised-button class="mr-2" type="submit">
+              Pesquisar
+            </button>
+          </div>
+        </div>
+      </form>
+      <ng-container *ngIf="dataSource && dataSource.data.length != 0">
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="dataSource" class="w-100">
+            <ng-container matColumnDef="condominio">
+              <mat-header-cell *matHeaderCellDef>Condomínio</mat-header-cell>
+              <mat-cell *matCellDef="let unidade">{{unidade.condominio}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="bloco">
+              <mat-header-cell *matHeaderCellDef>Bloco</mat-header-cell>
+              <mat-cell *matCellDef="let unidade">{{unidade.bloco}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="unidade">
+              <mat-header-cell *matHeaderCellDef>Unidade</mat-header-cell>
+              <mat-cell *matCellDef="let unidade">{{unidade.unidade}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="metragem">
+              <mat-header-cell *matHeaderCellDef>Metragem</mat-header-cell>
+              <mat-cell *matCellDef="let unidade">{{unidade.metragem}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="quarto">
+              <mat-header-cell *matHeaderCellDef>Quartos</mat-header-cell>
+              <mat-cell *matCellDef="let unidade">{{unidade.quartos}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="banheiro">
+              <mat-header-cell *matHeaderCellDef>Banheiros</mat-header-cell>
+              <mat-cell *matCellDef="let unidade">{{unidade.banheiros}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="acoes">
+              <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+              <mat-cell  *matCellDef="let unidade">
+                <fa-icon [icon]="faEdit" title="Editar" style="font-size: 21px;cursor: pointer"
+                         routerLink="/unidade/editar/{{unidade.idCondominio}}/{{unidade.bloco}}/{{unidade.unidade}}">
+                </fa-icon>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let unidade; columns: displayColumns;"></mat-row>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>

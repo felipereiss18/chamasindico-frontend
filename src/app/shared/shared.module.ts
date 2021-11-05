@@ -7,6 +7,9 @@ import {NgxEditorModule} from "ngx-editor";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 import localePT from '@angular/common/locales/pt';
 import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
+import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
+import {APP_DATE_FORMATS, AppDateAdapter} from "./adapter/AppDateAdapter";
 
 registerLocaleData(localePT, 'pt-BR');
 
@@ -34,6 +37,9 @@ registerLocaleData(localePT, 'pt-BR');
     {provide: LOCALE_ID, useValue: 'pt-BR'}
     , CurrencyPipe
     , {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
   ]
 })
 export class SharedModule {

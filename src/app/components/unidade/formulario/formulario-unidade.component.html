@@ -1,0 +1,197 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+  <p class="fs-4 fw-bold mb-4">{{title}}</p>
+</div>
+<div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+  <mat-card class="w-100">
+    <mat-card-title>
+      <p fxFlex="95" class="fs-5 fw-bold">Dados Gerais</p>
+    </mat-card-title>
+    <mat-card-content>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="2em">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <mat-label class="fw-bold">Condomínio: </mat-label>
+          <mat-label>{{condominio.nome}}</mat-label>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <mat-label class="fw-bold">Bloco: </mat-label>
+          <mat-label>{{bloco}}</mat-label>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <mat-label class="fw-bold">Unidade: </mat-label>
+          <mat-label>{{unidade.id}}</mat-label>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <mat-label class="fw-bold">Metragem: </mat-label>
+          <mat-label>{{unidade.metragem}}</mat-label>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <mat-label class="fw-bold">Quartos: </mat-label>
+          <mat-label>{{unidade.quartos}}</mat-label>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <mat-label class="fw-bold">Banheiros: </mat-label>
+          <mat-label>{{unidade.banheiros}}</mat-label>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="w-100">
+    <mat-card-title>
+      <p fxFlex="95" class="fs-5 fw-bold">Proprietário</p>
+    </mat-card-title>
+    <mat-card-content>
+      <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="Proprietário">
+          <form [formGroup]="formProprietario" class="mt-2">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+              <mat-form-field appearance="outline" fxFlex="50">
+                <mat-label>Nome</mat-label>
+                <input class="mat-input-element" matInput type="text" formControlName="nome" autocomplete="off" required>
+                <mat-error *ngIf="formProprietario.controls.nome.invalid">
+                  {{getMessageError(formProprietario.controls.nome, 'Nome')}}
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="25">
+                <mat-label>CPF</mat-label>
+                <input class="mat-input-element" matInput type="text" formControlName="cpf" autocomplete="off" required
+                      mask="000.000.000-00">
+                <mat-error *ngIf="formProprietario.controls.cpf.invalid">
+                  {{getMessageError(formProprietario.controls.cpf, 'CPF')}}
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="25">
+                <mat-label>Data de Nascimento</mat-label>
+                <input matInput [matDatepicker]="picker" (click)="picker.open()" required readonly
+                       formControlName="nascimento">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker [disabled]="visualizar" #picker></mat-datepicker>
+                <mat-error *ngIf="formProprietario.controls.nascimento.invalid">
+                  {{getMessageError(formProprietario.controls.nascimento, 'Data de Nascimento')}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+              <mat-form-field appearance="outline" fxFlex="18">
+                <mat-label>Telefone</mat-label>
+                <input matInput class="mat-input-element" mask="(00) 0000-0000 || (00) 00000-0000"
+                       formControlName="telefone" required autocomplete="off" [validation]="true">
+                <mat-error *ngIf="formProprietario.controls.telefone.invalid">
+                  {{getMessageError(formProprietario.controls.telefone, 'Telefone')}}
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="28.5">
+                <mat-label>E-mail</mat-label>
+                <input matInput type="email" class="mat-input-element" formControlName="email" autocomplete="off"
+                       required>
+                <mat-error *ngIf="formProprietario.controls.email.invalid">
+                  {{getMessageError(formProprietario.controls.email, 'E-mail')}}
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="25">
+                <mat-label>Usuário</mat-label>
+                <input matInput class="mat-input-element" formControlName="usuario" autocomplete="off" required>
+                <mat-error *ngIf="formProprietario.controls.usuario.invalid">
+                  {{getMessageError(formProprietario.controls.usuario)}}
+                </mat-error>
+              </mat-form-field>
+              <section>
+                <mat-slide-toggle color="primary" formControlName="morador" [disabled]="visualizar"
+                                  (change)="alteraSindico($event.checked)">
+                  Morador
+                </mat-slide-toggle>
+              </section>
+              <section>
+                <mat-slide-toggle color="primary" formControlName="sindico"
+                                  [disabled]="visualizar || !this.formProprietario.controls.morador.value">
+                  Sindico
+                </mat-slide-toggle>
+              </section>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="around-between start"
+                 *ngIf="!this.formProprietario.controls.morador.value">
+              <mat-divider></mat-divider>
+              <p fxFlex="95" class="fs-6 fw-bold mt-2">Endereço</p>
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+                <mat-form-field appearance="outline" fxFlex="25">
+                  <mat-label>CEP</mat-label>
+                  <input matInput class="mat-input-element" mask="00000-000" formControlName="cep" autocomplete="off"
+                        [validation]="true" (blur)="buscarCep($event)">
+                  <mat-error *ngIf="formProprietario.controls.cep.invalid">
+                    {{getMessageError(formProprietario.controls.cep, 'CEP')}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+                <mat-form-field class="mat-form-field w-100" appearance="outline">
+                  <mat-label>Descrição</mat-label>
+                  <input matInput class="mat-input-element" formControlName="endereco" autocomplete="off">
+                  <mat-error *ngIf="formProprietario.controls.endereco.invalid">
+                    {{getMessageError(formProprietario.controls.endereco)}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+                <mat-form-field class="mat-form-field" style="width: 32%" appearance="outline">
+                  <mat-label>Número</mat-label>
+                  <input matInput class="mat-input-element" formControlName="numero" autocomplete="off">
+                  <mat-error *ngIf="formProprietario.controls.numero.invalid">
+                    {{getMessageError(formProprietario.controls.numero)}}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="mat-form-field" style="width: 67%" appearance="outline">
+                  <mat-label>Complemento</mat-label>
+                  <input matInput class="mat-input-element" formControlName="complemento" autocomplete="off">
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+                <mat-form-field class="mat-form-field" style="width: 33%" appearance="outline">
+                  <mat-label>Bairro</mat-label>
+                  <input matInput class="mat-input-element" formControlName="bairro" autocomplete="off">
+                  <mat-error *ngIf="formProprietario.controls.bairro.invalid">
+                    {{getMessageError(formProprietario.controls.bairro)}}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="mat-form-field" style="width: 33%;" appearance="outline">
+                  <mat-label>Cidade</mat-label>
+                  <input matInput class="mat-input-element" formControlName="cidade" autocomplete="off">
+                  <mat-error *ngIf="formProprietario.controls.cidade.invalid">
+                    {{getMessageError(formProprietario.controls.cidade)}}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="mat-form-field" style="width: 34%;" appearance="outline">
+                  <mat-label>Estado</mat-label>
+                  <mat-select formControlName="estado" id="estado" matTooltip="Estado">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let estado of estados" [value]="estado.id" [id]="estado.id">
+                      {{estado.id}} - {{estado.nome}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formProprietario.controls.estado.invalid">
+                    {{getMessageError(formProprietario.controls.estado)}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100 mb-2">
+              <button mat-raised-button type="button" (click)="novoProprietario()" *ngIf="proprietario?.usuario?.id && !visualizar">
+                Novo Proprietário
+              </button>
+              <button mat-raised-button color="primary" type="button" (click)="salvarProprietario()" *ngIf="!visualizar">
+                Salvar
+              </button>
+            </div>
+          </form>
+        </mat-tab>
+        <mat-tab label="Inquílino">
+
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+    <button mat-raised-button routerLink="/unidade" type="button">
+      Voltar
+    </button>
+  </div>
+</div>

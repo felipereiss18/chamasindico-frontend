@@ -61,7 +61,7 @@ export class MenuComponent implements OnInit {
         {name: 'Configurações', icon: 'settings_applications',
           subMenus: [
             {name: 'Condomínios', link:'condominio', icon: 'apartment'},
-            {name: 'Unidades', link: 'some-link', icon: 'maps_home_work'},
+            {name: 'Unidades', link: 'unidade', icon: 'maps_home_work'},
             {name: 'Áreas Comuns', link: 'area-comum', icon: 'deck'},
             {name: 'Usuários', link:'usuario', icon: 'person'},
           ]},
