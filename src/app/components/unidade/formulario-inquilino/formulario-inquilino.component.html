@@ -38,12 +38,8 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="acao" *ngIf="!visualizar">
-        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <th mat-header-cell *matHeaderCellDef>Editar</th>
         <td mat-cell *matCellDef="let alu;let i = index;">
-          <button matTooltip="Renovar" type="button" style="color:black" mat-icon-button [disabled]="visualizar"
-                  (click)="renovar(alu);">
-            <mat-icon>autorenew</mat-icon>
-          </button>
           <button type="button" style="color:black" mat-icon-button [disabled]="visualizar" matTooltip="Editar"
                   (click)="editar(alu);">
             <mat-icon>edit</mat-icon>

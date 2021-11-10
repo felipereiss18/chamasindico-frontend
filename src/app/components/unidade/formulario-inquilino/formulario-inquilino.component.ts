@@ -71,6 +71,9 @@ export class FormularioInquilinoComponent extends BasicComponent implements OnIn
   }
 
   salvarInquilino() {
+    for (const key in this.formInquilino.controls) {
+      this.formInquilino.get(key)?.updateValueAndValidity();
+    }
     if(this.formInquilino.valid) {
       if (this.edicao) {
         this.edit().then(() => {
@@ -160,28 +163,27 @@ export class FormularioInquilinoComponent extends BasicComponent implements OnIn
     this.idAluguel = undefined;
     this.idUsuario = undefined;
 
-    this.formInquilino.controls.dataInicio.setValue('');
-    this.formInquilino.controls.dataFim.setValue('');
-    this.formInquilino.controls.nome.setValue('');
-    this.formInquilino.controls.cpf.setValue('');
-    this.formInquilino.controls.nascimento.setValue('');
-    this.formInquilino.controls.email.setValue('');
-    this.formInquilino.controls.telefone.setValue('');
-    this.formInquilino.controls.usuario.setValue('');
-  }
+    for (const key in this.formInquilino.controls) {
+      this.formInquilino.get(key)?.setValue('');
+      this.formInquilino.get(key)?.clearValidators();
+      this.formInquilino.get(key)?.updateValueAndValidity();
+    }
 
-  renovar(aluguel: Aluguel) {
-    this.edicao = false;
-    this.idUsuario = aluguel.inquilino.usuario.id;
-    this.formInquilino.controls.nome.setValue(aluguel.inquilino.nome);
-    this.formInquilino.controls.cpf.setValue(aluguel.inquilino.cpf);
+    this.formInquilino.get('dataInicio')?.setValidators([Validators.required]);
+    this.formInquilino.get('dataFim')?.setValidators([Validators.required]);
+    this.formInquilino.get('nome')?.setValidators([Validators.required]);
+    this.formInquilino.get('cpf')?.setValidators([Validators.required, CPFValidator]);
+    this.formInquilino.get('nascimento')?.setValidators([Validators.required]);
+    this.formInquilino.get('email')?.setValidators(
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
+        ]
+      );
+    this.formInquilino.get('telefone')?.setValidators([Validators.required, telefoneNumeroRepetidoValidator]);
+    this.formInquilino.get('usuario')?.setValidators([Validators.required]);
 
-    let data = new Date(aluguel.inquilino.nascimento + ' ');
-    this.formInquilino.controls.nascimento.setValue(data);
-
-    this.formInquilino.controls.email.setValue(aluguel.inquilino.email);
-    this.formInquilino.controls.telefone.setValue(aluguel.inquilino.telefone);
-    this.formInquilino.controls.usuario.setValue(aluguel.inquilino.usuario.nome);
   }
 
   editar(aluguel: Aluguel) {
