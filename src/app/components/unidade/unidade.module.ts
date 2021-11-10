@@ -10,13 +10,15 @@ import {ListaUnidadeComponent} from './lista/lista-unidade.component';
 import {UnidadeRoutingModule} from "./unidade-routing.module";
 import { FormularioUnidadeComponent } from './formulario/formulario-unidade.component';
 import { FormularioInquilinoComponent } from './formulario-inquilino/formulario-inquilino.component';
+import { FormularioGaragemComponent } from './formulario-garagem/formulario-garagem.component';
 
 
 @NgModule({
   declarations: [
     ListaUnidadeComponent,
     FormularioUnidadeComponent,
-    FormularioInquilinoComponent
+    FormularioInquilinoComponent,
+    FormularioGaragemComponent
   ],
   imports: [
     CommonModule,
