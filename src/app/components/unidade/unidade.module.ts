@@ -9,12 +9,14 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {ListaUnidadeComponent} from './lista/lista-unidade.component';
 import {UnidadeRoutingModule} from "./unidade-routing.module";
 import { FormularioUnidadeComponent } from './formulario/formulario-unidade.component';
+import { FormularioInquilinoComponent } from './formulario-inquilino/formulario-inquilino.component';
 
 
 @NgModule({
   declarations: [
     ListaUnidadeComponent,
-    FormularioUnidadeComponent
+    FormularioUnidadeComponent,
+    FormularioInquilinoComponent
   ],
   imports: [
     CommonModule,

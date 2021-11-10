@@ -1,0 +1,157 @@
+<form [formGroup]="formInquilino" class="mt-2" (submit)="salvarInquilino()">
+  <div class="mat-elevation-z2 m-2 table-container">
+    <table mat-table [dataSource]="alugueis" class="w-100" datapagesize="10"
+           *ngIf="alugueis && alugueis.length >= 0" #tableAlugueis>
+      <ng-container matColumnDef="dataInicio">
+        <th mat-header-cell *matHeaderCellDef>Data Ínicio</th>
+        <td mat-cell *matCellDef="let alu">
+          {{alu.dataInicio | date: 'dd/MM/yyyy'}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="dataFim">
+        <th mat-header-cell *matHeaderCellDef>Data Fim</th>
+        <td mat-cell *matCellDef="let alu">
+          {{alu.dataFim | date: 'dd/MM/yyyy'}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let alu">
+          {{alu.inquilino.nome}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="cpf">
+        <th mat-header-cell *matHeaderCellDef>CPF</th>
+        <td mat-cell *matCellDef="let alu">
+          {{alu.inquilino.cpf | mask: '000.000.000-00'}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="telefone">
+        <th mat-header-cell *matHeaderCellDef>Telefone</th>
+        <td mat-cell *matCellDef="let alu" >
+          <ng-container *ngIf="alu.inquilino.telefone.length === 10">
+            {{alu.inquilino.telefone | mask: '(00) 0000-0000'}}
+          </ng-container>
+          <ng-container *ngIf="alu.inquilino.telefone.length === 11">
+            {{alu.inquilino.telefone | mask: '(00) 0000-00000'}}
+          </ng-container>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="acao" *ngIf="!visualizar">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let alu;let i = index;">
+          <button matTooltip="Renovar" type="button" style="color:black" mat-icon-button [disabled]="visualizar"
+                  (click)="renovar(alu);">
+            <mat-icon>autorenew</mat-icon>
+          </button>
+          <button type="button" style="color:black" mat-icon-button [disabled]="visualizar" matTooltip="Editar"
+                  (click)="editar(alu);">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsTableAluguel"></tr>
+      <tr mat-row *matRowDef="let alu; let index = index; columns: columnsTableAluguel;"></tr>
+    </table>
+  </div>
+
+  <mat-accordion multi class="w-100">
+    <mat-expansion-panel expanded="true" class="mat-panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Dados do Aluguel
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Data de Início</mat-label>
+          <input matInput [matDatepicker]="dataInicioPicker" (click)="dataInicioPicker.open()" required readonly
+                 formControlName="dataInicio">
+          <mat-datepicker-toggle matSuffix [for]="dataInicioPicker"></mat-datepicker-toggle>
+          <mat-datepicker [disabled]="visualizar" #dataInicioPicker></mat-datepicker>
+          <mat-error *ngIf="formInquilino.controls.dataInicio.invalid">
+            {{getMessageError(formInquilino.controls.dataInicio, 'Data de Ínicio')}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Data de Final</mat-label>
+          <input matInput [matDatepicker]="dataFimPicker" (click)="dataFimPicker.open()" required readonly
+                 formControlName="dataFim">
+          <mat-datepicker-toggle matSuffix [for]="dataFimPicker"></mat-datepicker-toggle>
+          <mat-datepicker [disabled]="visualizar" #dataFimPicker></mat-datepicker>
+          <mat-error *ngIf="formInquilino.controls.dataFim.invalid">
+            {{getMessageError(formInquilino.controls.dataFim, 'Data de Fim')}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel expanded="true" class="mat-panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Dados do Inquílino
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+        <mat-form-field appearance="outline" fxFlex="50">
+          <mat-label>Nome</mat-label>
+          <input class="mat-input-element" matInput type="text" formControlName="nome" autocomplete="off" required>
+          <mat-error *ngIf="formInquilino.controls.nome.invalid">
+            {{getMessageError(formInquilino.controls.nome, 'Nome')}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>CPF</mat-label>
+          <input class="mat-input-element" matInput type="text" formControlName="cpf" autocomplete="off" required
+                 mask="000.000.000-00">
+          <mat-error *ngIf="formInquilino.controls.cpf.invalid">
+            {{getMessageError(formInquilino.controls.cpf, 'CPF')}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Data de Nascimento</mat-label>
+          <input matInput [matDatepicker]="picker" (click)="picker.open()" required readonly
+                 formControlName="nascimento">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker [disabled]="visualizar" #picker></mat-datepicker>
+          <mat-error *ngIf="formInquilino.controls.nascimento.invalid">
+            {{getMessageError(formInquilino.controls.nascimento, 'Data de Nascimento')}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+        <mat-form-field appearance="outline" fxFlex="18">
+          <mat-label>Telefone</mat-label>
+          <input matInput class="mat-input-element" mask="(00) 0000-0000 || (00) 00000-0000"
+                 formControlName="telefone" required autocomplete="off" [validation]="true">
+          <mat-error *ngIf="formInquilino.controls.telefone.invalid">
+            {{getMessageError(formInquilino.controls.telefone, 'Telefone')}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="28.5">
+          <mat-label>E-mail</mat-label>
+          <input matInput type="email" class="mat-input-element" formControlName="email" autocomplete="off"
+                 required>
+          <mat-error *ngIf="formInquilino.controls.email.invalid">
+            {{getMessageError(formInquilino.controls.email, 'E-mail')}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Usuário</mat-label>
+          <input matInput class="mat-input-element" formControlName="usuario" autocomplete="off" required>
+          <mat-error *ngIf="formInquilino.controls.usuario.invalid">
+            {{getMessageError(formInquilino.controls.usuario)}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100 mb-2 mt-3">
+    <button mat-raised-button type="button" (click)="novoInquilino(); " *ngIf="!visualizar">
+      Novo Inquílino
+    </button>
+    <button mat-raised-button color="primary" type="submit" *ngIf="!visualizar">
+      Salvar
+    </button>
+  </div>
+</form>

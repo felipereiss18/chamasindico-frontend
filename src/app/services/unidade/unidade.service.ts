@@ -8,6 +8,8 @@ import {Observable} from "rxjs";
 import {ResponsePagination} from "../../interfaces/response-pagination.interface";
 import {catchError} from "rxjs/operators";
 import {UnidadePesquisaDto} from "../../interfaces/pesquisa/unidade-pesquisa-dto";
+import {ResponseDto} from "../../interfaces/response-dto.interface";
+import {Aluguel} from "../../models/aluguel";
 
 export interface UnidadePesquisa {
   idBloco: string;
@@ -32,6 +34,11 @@ export class UnidadeService extends BaseService<Unidade, number>{
     }
 
     return this.http.post<ResponsePagination<UnidadePesquisaDto>>(this.base + '/pesquisar', dado, optionPost)
+      .pipe(catchError(this.handleError));
+  }
+
+  buscarAlugueis(condominio: number, bloco: string, unidade: number): Observable<ResponseDto<Aluguel[]>> {
+    return this.http.get<ResponseDto<Aluguel[]>>(`${this.base}/${condominio}/${bloco}/${unidade}/alugueis`)
       .pipe(catchError(this.handleError));
   }
 }

@@ -39,7 +39,7 @@ export class FormularioUnidadeComponent extends BasicComponent implements OnInit
   formProprietario: FormGroup;
   estados: Estado[] = [];
   proprietario = new Proprietario();
-  private idCondominio: number;
+  idCondominio: number;
 
   constructor(
     private readonly router: Router,
@@ -277,7 +277,7 @@ export class FormularioUnidadeComponent extends BasicComponent implements OnInit
         this.formProprietario.controls.estado.setValue(res.data.estado?.id);
       }, error => {
         if (error.statusError !== 400) {
-          this.messageError('Não foi possível carregar os dados do Proprietário.')
+          this.messageError('Não foi possível carregar os dados do Proprietário.');
           console.error(error);
         } else {
           this.messageWarning(error.message);
