@@ -1,0 +1,58 @@
+<form [formGroup]="formGaragem" (submit)="salvar()">
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+    <mat-form-field appearance="outline" fxFlex="15">
+      <mat-label>Número</mat-label>
+      <input class="mat-input-element" matInput type="text" formControlName="numero" autocomplete="off" required>
+      <mat-error *ngIf="formGaragem.controls.numero.invalid">
+        {{getMessageError(formGaragem.controls.numero, 'Número')}}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100">
+    <mat-form-field appearance="outline" fxFlex="15">
+      <mat-label>Placa</mat-label>
+      <input class="mat-input-element" matInput type="text" formControlName="placa" autocomplete="off" required
+            [disabled]="visualizar">
+      <mat-error *ngIf="formGaragem.controls.placa.invalid">
+        {{getMessageError(formGaragem.controls.placa, 'Placa')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex="30">
+      <mat-label>Marca</mat-label>
+      <input class="mat-input-element" matInput type="text" formControlName="marca" autocomplete="off" required
+             [disabled]="visualizar">
+      <mat-error *ngIf="formGaragem.controls.marca.invalid">
+        {{getMessageError(formGaragem.controls.marca, 'Marca')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex="35">
+      <mat-label>Modelo</mat-label>
+      <input class="mat-input-element" matInput type="text" formControlName="modelo" autocomplete="off" required
+             [disabled]="visualizar">
+      <mat-error *ngIf="formGaragem.controls.modelo.invalid">
+        {{getMessageError(formGaragem.controls.modelo, 'Modelo')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex="10">
+      <mat-label>Ano de Fabricação</mat-label>
+      <input class="mat-input-element" matInput type="text" formControlName="anoFabricacao" autocomplete="off" required
+             [disabled]="visualizar" mask="0000">
+      <mat-error *ngIf="formGaragem.controls.anoFabricacao.invalid">
+        {{getMessageError(formGaragem.controls.anoFabricacao, 'Ano de Fabricação')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex="10">
+      <mat-label>Ano do Modelo</mat-label>
+      <input class="mat-input-element" matInput type="text" formControlName="anoModelo" autocomplete="off" required
+             [disabled]="visualizar" mask="0000">
+      <mat-error *ngIf="formGaragem.controls.anoModelo.invalid">
+        {{getMessageError(formGaragem.controls.anoModelo, 'Ano do Modelo')}}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+    <button mat-raised-button color="primary" type="submit" *ngIf="!visualizar">
+      Salvar
+    </button>
+  </div>
+</form>

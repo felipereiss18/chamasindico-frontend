@@ -37,7 +37,7 @@
   </mat-card>
   <mat-card class="w-100">
     <mat-card-title>
-      <p fxFlex="95" class="fs-5 fw-bold">Proprietário</p>
+      <p fxFlex="95" class="fs-5 fw-bold">Dados Gerais</p>
     </mat-card-title>
     <mat-card-content>
       <mat-tab-group mat-align-tabs="center">
@@ -183,11 +183,22 @@
           </form>
         </mat-tab>
         <mat-tab label="Inquílino">
-
+          <app-formulario-inquilino [id]="id" [bloco]="bloco" [condominio]="idCondominio" [visualizar]="visualizar">
+          </app-formulario-inquilino>
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>
   </mat-card>
+  <mat-card class="w-100">
+    <mat-card-title>
+      <p fxFlex="95" class="fs-5 fw-bold">Dados da Garagem</p>
+    </mat-card-title>
+    <mat-card-content>
+      <app-formulario-garagem [id]="id" [bloco]="bloco" [condominio]="idCondominio" [visualizar]="visualizar">
+      </app-formulario-garagem>
+    </mat-card-content>
+  </mat-card>
+
 
   <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
     <button mat-raised-button routerLink="/unidade" type="button">
