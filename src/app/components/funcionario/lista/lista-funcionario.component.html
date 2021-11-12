@@ -1,0 +1,83 @@
+<mat-card>
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <h2>Consultar Funcionário</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutAlign="space-between none" style="width: 100%">
+      <form [formGroup]="consultarForm" (ngSubmit)="pesquisar()">
+        <div class="mat-elevation-z0 mb-2">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100 pb-1 pt-1">
+            <mat-form-field class="mat-form-field" fxFlex="35" appearance="outline">
+              <mat-label>Nome</mat-label>
+              <input class="mat-input-element" matInput formControlName="nome" autocomplete="off">
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="35" appearance="outline">
+              <mat-label>Usuário</mat-label>
+              <input class="mat-input-element" matInput formControlName="usuario" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="w-100 pb-1" fxLayout="row" fxLayoutGap="1.5em" fxLayoutAlign="end center">
+            <button mat-raised-button type="submit">
+              Pesquisar
+            </button>
+            <button mat-raised-button color="primary" routerLink="/funcionario/adicionar" type="button"
+                    *ngIf="getUser().perfil?.role === roles.SINDICO">
+              Novo Funcionário
+            </button>
+          </div>
+        </div>
+      </form>
+      <ng-container *ngIf="dataSource && dataSource.data.length != 0">
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="dataSource" class="w-100">
+            <ng-container matColumnDef="nome">
+              <mat-header-cell *matHeaderCellDef>Usuário</mat-header-cell>
+              <mat-cell *matCellDef="let func">{{func.nome}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="usuario">
+              <mat-header-cell *matHeaderCellDef>Usuário</mat-header-cell>
+              <mat-cell *matCellDef="let func">{{func.usuario}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef>E-mail</mat-header-cell>
+              <mat-cell *matCellDef="let func">{{func.email}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="telefone">
+              <mat-header-cell *matHeaderCellDef>Telefone</mat-header-cell>
+              <mat-cell *matCellDef="let func">
+                <ng-container *ngIf="func.telefone.length === 10">
+                  {{func.telefone | mask: '(00) 0000-0000'}}
+                </ng-container>
+                <ng-container *ngIf="func.telefone.length === 11">
+                  {{func.telefone | mask: '(00) 0000-00000'}}
+                </ng-container>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="acoes">
+              <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+              <mat-cell  *matCellDef="let func">
+                <fa-icon [icon]="faEdit" title="Editar" style="font-size: 21px;cursor: pointer"
+                         routerLink="/funcionario/editar/{{func.id}}">
+                </fa-icon>
+                <mat-icon title="Visualizar" [inline]="true" style="font-size: 24px;cursor: pointer"
+                          routerLink="/funcionario/detalhar/{{func.id}}">
+                  feed_outline
+                </mat-icon>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="alterStatus">
+              <mat-header-cell *matHeaderCellDef>Ativar/Inativar</mat-header-cell>
+              <mat-cell *matCellDef="let func">
+                <mat-slide-toggle (change)="alterarSituacao(func.id, $event)" [checked]="func.situacao"
+                                  color="primary">
+                </mat-slide-toggle>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let func; columns: displayColumns;"></mat-row>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>

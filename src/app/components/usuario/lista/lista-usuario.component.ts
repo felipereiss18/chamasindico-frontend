@@ -112,11 +112,11 @@ export class ListaUsuarioComponent extends BasicComponent implements OnInit {
       if(result) {
         this.service.alterarSituacao(id, $event.checked).subscribe(
           res => {
-            this.messageSucess(`Condomínio ${$event.checked ? 'ativado' : 'desativado'} com sucesso!`);
+            this.messageSucess(`Usuário ${$event.checked ? 'ativado' : 'desativado'} com sucesso!`);
             this.pesquisar();
           }, error => {
             console.error(error);
-            this.messageError('Erro ao alterar a situação do condomínio.');
+            this.messageError('Erro ao alterar a situação do usuário.');
           }
         );
       }

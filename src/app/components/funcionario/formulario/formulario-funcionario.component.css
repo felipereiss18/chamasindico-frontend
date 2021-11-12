@@ -1,0 +1,9 @@
+.ativo {
+  background-color: darkgreen;
+  color: whitesmoke;
+}
+
+.inativo {
+  background-color: darkred;
+  color: whitesmoke;
+}
