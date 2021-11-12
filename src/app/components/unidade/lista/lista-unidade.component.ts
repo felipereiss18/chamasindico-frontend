@@ -5,7 +5,6 @@ import {CondominioService} from "../../../services/condominio/condominio.service
 import {NgxSpinnerService} from "ngx-spinner";
 import {SnotifyService} from "ng-snotify";
 import {UserService} from "../../../core/auth/user/user.service";
-import {MatDialog} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
 import {Condominio} from "../../../models/condominio";
 import {UnidadePesquisaDto} from "../../../interfaces/pesquisa/unidade-pesquisa-dto";
@@ -13,6 +12,7 @@ import {BasicComponent} from "../../../shared/basic-component/basic-component";
 import {Bloco} from "../../../models/bloco";
 import {faEdit} from '@fortawesome/free-solid-svg-icons';
 import {UnidadePesquisa, UnidadeService} from "../../../services/unidade/unidade.service";
+import {Roles} from "../../../core/auth/user/roles.enum";
 
 @Component({
   selector: 'app-lista-unidade',
@@ -26,6 +26,7 @@ export class ListaUnidadeComponent extends BasicComponent implements OnInit {
   condominios: Condominio[] = [];
   blocos: Bloco[] = [];
   faEdit = faEdit;
+  roles = Roles;
 
   constructor(
     private readonly router: Router,
@@ -42,8 +43,11 @@ export class ListaUnidadeComponent extends BasicComponent implements OnInit {
       bloco: [null],
       unidade: [null]
     })
+  }
 
-    condominioService.findAll().subscribe(
+  async ngOnInit() {
+
+    await this.condominioService.findAll().toPromise().then(
       res => {
         this.condominios = res.data;
       },
@@ -51,10 +55,11 @@ export class ListaUnidadeComponent extends BasicComponent implements OnInit {
         this.messageError('Não foi possível carregar os condomínios');
         console.error(error);
       }
-    )
-  }
+    );
 
-  ngOnInit(): void {
+    if (this.getUser().perfil?.role !== this.roles.ADMIN) {
+      this.carregarBlocos(this.getUser().condominio);
+    }
   }
 
   pesquisar() {

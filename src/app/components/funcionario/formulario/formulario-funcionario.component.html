@@ -1,0 +1,84 @@
+<form [formGroup]="formFuncionario" class="w-100" (ngSubmit)="salvar()">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <p class="fs-4 fw-bold mb-4">{{title}}</p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados Gerais</p>
+        <mat-chip-list *ngIf="id">
+          <mat-chip [ngClass]="situacao ? 'ativo' : 'inativo'">{{situacao ? 'Ativo' : 'Inativo'}}
+          </mat-chip>
+        </mat-chip-list>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field class="mat-form-field" fxFlex="50" appearance="outline">
+              <mat-label>Nome</mat-label>
+              <input class="mat-input-element" matInput formControlName="nome" autocomplete="off" required
+                     type="text">
+              <mat-error *ngIf="formFuncionario.controls.nome.invalid">
+                {{getMessageError(formFuncionario.controls.nome)}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>CPF</mat-label>
+              <input class="mat-input-element" matInput formControlName="cpf" autocomplete="off" required
+                     type="text" mask="000.000.000-00">
+              <mat-error *ngIf="formFuncionario.controls.cpf.invalid">
+                {{getMessageError(formFuncionario.controls.nome, 'CPF')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Data de Início</mat-label>
+              <input matInput [matDatepicker]="nascimentoPicker" (click)="nascimentoPicker.open()" required readonly
+                     formControlName="nascimento">
+              <mat-datepicker-toggle matSuffix [for]="nascimentoPicker"></mat-datepicker-toggle>
+              <mat-datepicker [disabled]="visualizar" #nascimentoPicker></mat-datepicker>
+              <mat-error *ngIf="formFuncionario.controls.nascimento.invalid">
+                {{getMessageError(formFuncionario.controls.nascimento, 'Data de Nascimento')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field appearance="outline" fxFlex="25">
+              <mat-label>Telefone</mat-label>
+              <input matInput class="mat-input-element" mask="(00) 0000-0000 || (00) 00000-0000"
+                     formControlName="telefone" required autocomplete="off" [validation]="true">
+              <mat-error *ngIf="formFuncionario.controls.telefone.invalid">
+                {{getMessageError(formFuncionario.controls.telefone, 'Telefone')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="40">
+              <mat-label>E-mail</mat-label>
+              <input matInput type="email" class="mat-input-element" formControlName="email" autocomplete="off"
+                     required>
+              <mat-error *ngIf="formFuncionario.controls.email.invalid">
+                {{getMessageError(formFuncionario.controls.email, 'E-mail')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="35">
+              <mat-label>Usuário</mat-label>
+              <input matInput class="mat-input-element" formControlName="usuario" autocomplete="off" required>
+              <mat-error *ngIf="formFuncionario.controls.usuario.invalid">
+                {{getMessageError(formFuncionario.controls.usuario)}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+      <button mat-raised-button routerLink="/funcionario" type="button">
+        Voltar
+      </button>
+      <button mat-raised-button color="primary" type="submit" *ngIf="!this.visualizar">
+        Salvar
+      </button>
+    </div>
+  </div>
+</form>

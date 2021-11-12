@@ -62,7 +62,6 @@ export class MenuComponent implements OnInit {
           subMenus: [
             {name: 'Condomínios', link:'condominio', icon: 'apartment'},
             {name: 'Unidades', link: 'unidade', icon: 'maps_home_work'},
-            {name: 'Áreas Comuns', link: 'area-comum', icon: 'deck'},
             {name: 'Usuários', link:'usuario', icon: 'person'},
           ]},
       ];
@@ -70,19 +69,17 @@ export class MenuComponent implements OnInit {
       return [
         {name: 'Home', link:'', icon: 'home'},
         {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
-        {name: 'Usuários', link:'usuario', icon: 'person'},
         {name: 'Condomínio', icon: 'apartment',
           subMenus: [
-            {name: 'Blocos', link: 'some-link', img: 'assets/img/edificios.png'},
-            {name: 'Unidades', link: 'some-link', icon: 'maps_home_work'},
-            {name: 'Áreas Comuns', link: 'some-link', icon: 'deck'},
+            {name: 'Funcionário', link:'funcionario', icon: 'person'},
+            {name: 'Unidades', link: 'unidade', icon: 'maps_home_work'},
+            {name: 'Áreas Comuns', link: 'area-comum', icon: 'deck'},
           ]
         },
         {name: 'Comunicados', link:'some-link', icon: 'campaign'},
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
         {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
         {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},
-        {name: 'Assembleia', link: 'some-link', icon: 'forum'},
       ];
     }else if (perfil?.role === Roles.PROPRIE) {
       return [
@@ -92,7 +89,6 @@ export class MenuComponent implements OnInit {
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
         {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
         {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},
-        {name: 'Assembleia', link: 'some-link', icon: 'forum'},
       ];
     }else if (perfil?.role === Roles.INQUILINO) {
       return [
@@ -102,9 +98,8 @@ export class MenuComponent implements OnInit {
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
         {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
         {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},
-        {name: 'Assembleia', link: 'some-link', icon: 'forum'},
       ];
-    }else if (perfil?.role === Roles.PORTEIRO) {
+    }else if (perfil?.role === Roles.FUNCIONARIO) {
       return [
         {name: 'Home', link:'', icon: 'home'},
         {name: 'Comunicados', link:'some-link', icon: 'campaign'},
@@ -116,14 +111,12 @@ export class MenuComponent implements OnInit {
         {name: 'Home', link:'', icon: 'home'},
         {name: 'Usuários', link:'usuario', icon: 'person'},
         {name: 'Condomínio', icon: 'apartment', subMenus: [
-            {name: 'Blocos', link: 'some-link', img: 'assets/img/edificios.png'},
             {name: 'Unidades', link: 'some-link', icon: 'maps_home_work'},
             {name: 'Áreas Comuns', link: 'some-link', icon: 'deck'},
           ]},
         {name: 'Comunicados', link:'some-link', icon: 'campaign'},
         {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
         {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},
-        {name: 'Assembleia', link: 'some-link', icon: 'forum'},
       ];
     }
     return [];

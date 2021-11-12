@@ -3,11 +3,11 @@ import {Perfil} from "../core/auth/user/perfil";
 export class Usuario {
   id: number | undefined;
   nome: string;
-  perfil: Perfil;
-  situacao: boolean;
+  perfil: Perfil | undefined;
+  situacao: boolean | undefined;
   senha: string | undefined
 
-  constructor(nome: string, perfil: Perfil, situacao: boolean, id?: number, senha?: string) {
+  constructor(nome: string, perfil?: Perfil, situacao?: boolean, id?: number, senha?: string) {
     this.id = id;
     this.nome = nome;
     this.perfil = perfil;
