@@ -7,7 +7,7 @@
       <form [formGroup]="consultarForm" (ngSubmit)="pesquisar()">
         <div class="mat-elevation-z0 mb-2">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100 pb-2 pt-2" >
-            <mat-form-field class="mat-form-field" fxFlex="50" appearance="outline">
+            <mat-form-field class="mat-form-field" fxFlex="50" appearance="outline" *ngIf="getUser().perfil?.role === roles.ADMIN">
               <mat-label>Condomínio</mat-label>
               <mat-select formControlName="condominio" (selectionChange)="carregarBlocos($event.value)">
                 <mat-option></mat-option>
