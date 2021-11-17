@@ -21,9 +21,9 @@ import {CondominioRoutingModule} from "./condominio-routing.module";
         NgxMaskModule.forRoot({}),
         NgxEditorModule,
         MatDatepickerModule,
-        CondominioRoutingModule,
         FontAwesomeModule,
         MatSlideToggleModule,
+        CondominioRoutingModule,
     ]
 })
 export class CondominioModule { }

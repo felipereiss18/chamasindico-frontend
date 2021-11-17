@@ -1,0 +1,77 @@
+<mat-card>
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <h2>Consultar Comunicado</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutAlign="space-between none" style="width: 100%">
+      <form [formGroup]="consultarForm" (ngSubmit)="pesquisar()">
+        <div class="mat-elevation-z0 mb-2">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100 pb-1 pt-1">
+            <mat-form-field class="mat-form-field" fxFlex="60" appearance="outline">
+              <mat-label>Título</mat-label>
+              <input class="mat-input-element" matInput formControlName="titulo" autocomplete="off">
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="20" appearance="outline">
+              <mat-label>Data</mat-label>
+              <input matInput [matDatepicker]="dataPicker" (click)="dataPicker.open()" readonly
+                     formControlName="data">
+              <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dataPicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="20" appearance="outline">
+              <mat-label>Data de Vencimento</mat-label>
+              <input matInput [matDatepicker]="vencimentoPicker" (click)="vencimentoPicker.open()" readonly
+                     formControlName="vencimento">
+              <mat-datepicker-toggle matSuffix [for]="vencimentoPicker"></mat-datepicker-toggle>
+              <mat-datepicker #vencimentoPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="w-100 pb-1" fxLayout="row" fxLayoutGap="1.5em" fxLayoutAlign="end center">
+            <button mat-raised-button type="submit">
+              Pesquisar
+            </button>
+            <button mat-raised-button color="primary" routerLink="/comunicado/adicionar" type="button">
+              Novo Comunicado
+            </button>
+          </div>
+        </div>
+      </form>
+      <ng-container *ngIf="dataSource && dataSource.data.length != 0">
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="dataSource" class="w-100">
+            <ng-container matColumnDef="data">
+              <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+              <mat-cell *matCellDef="let comuni">{{comuni.data | date: 'dd/MM/yyyy'}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="vencimento">
+              <mat-header-cell *matHeaderCellDef>Vencimento</mat-header-cell>
+              <mat-cell *matCellDef="let comuni">{{comuni.vencimento | date: 'dd/MM/yyyy'}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="titulo">
+              <mat-header-cell *matHeaderCellDef>Título</mat-header-cell>
+              <mat-cell *matCellDef="let comuni">{{comuni.titulo}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="acoes">
+              <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+              <mat-cell  *matCellDef="let comuni" fxLayoutGap="0.5em">
+                <mat-icon title="Enviar E-mail" [inline]="true" (click)="enviar(comuni)"
+                          style="font-size: 24px;cursor: pointer" *ngIf="verificarDataVencimento(comuni)">
+                  send
+                </mat-icon>
+                <fa-icon [icon]="faEdit" title="Editar" style="font-size: 21px;cursor: pointer"
+                         routerLink="/comunicado/editar/{{comuni.id}}">
+                </fa-icon>
+                <mat-icon title="Visualizar" [inline]="true" style="font-size: 24px;cursor: pointer"
+                          routerLink="/comunicado/detalhar/{{comuni.id}}">
+                  feed_outline
+                </mat-icon>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let comuni; columns: displayColumns;"></mat-row>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>

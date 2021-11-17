@@ -6,22 +6,24 @@ import {NgxMaskModule} from "ngx-mask";
 import {NgxEditorModule} from "ngx-editor";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 import localePT from '@angular/common/locales/pt';
-import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from './component/confirm-dialog/confirm-dialog.component';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
-import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
 import {APP_DATE_FORMATS, AppDateAdapter} from "./adapter/AppDateAdapter";
+import {VisualizarDialogComponent} from "./component/visualizar-dialog/visualizar-dialog.component";
 
 registerLocaleData(localePT, 'pt-BR');
 
 @NgModule({
   declarations: [
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    VisualizarDialogComponent
   ],
   exports: [
-    AppMaterialModule
-    , FormsModule
-    , ReactiveFormsModule,
-    ConfirmDialogComponent
+    AppMaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ConfirmDialogComponent,
+    VisualizarDialogComponent
   ],
   imports: [
     FormsModule

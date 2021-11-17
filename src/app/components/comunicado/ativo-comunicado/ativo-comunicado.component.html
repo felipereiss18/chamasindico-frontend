@@ -1,0 +1,23 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5em">
+      <mat-icon>campaign</mat-icon>
+      <span>Comunicados</span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let comu of comunicados">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5em" style="cursor: pointer"
+             (click)="visualizar(comu)">
+          <mat-icon mat-list-icon>message</mat-icon>
+          <div>
+            <div mat-line>{{comu.titulo}}</div>
+            <div mat-line>{{comu.data | date: 'dd/MM/yyyy'}}</div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

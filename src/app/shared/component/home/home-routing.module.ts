@@ -43,6 +43,12 @@ const homeRoute: Routes = [
         loadChildren: () => import('../../../components/funcionario/funcionario.module')
           .then(m => m.FuncionarioModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'comunicado',
+        loadChildren: () => import('../../../components/comunicado/comunicado.module')
+          .then(m => m.ComunicadoModule),
+        canActivate: [AuthGuard]
       }
     ]
   }

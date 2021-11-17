@@ -1,0 +1,70 @@
+<form [formGroup]="formComunicado" class="w-100" (ngSubmit)="salvar()">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <p class="fs-4 fw-bold mb-4">{{title}}</p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados Gerais</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Data</mat-label>
+              <input matInput [matDatepicker]="dataPicker" (click)="dataPicker.open()" required readonly
+                     formControlName="data">
+              <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
+              <mat-datepicker [disabled]="visualizar" #dataPicker></mat-datepicker>
+              <mat-error *ngIf="formComunicado.controls.data.invalid">
+                {{getMessageError(formComunicado.controls.data, 'Data')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Data de Vencimento</mat-label>
+              <input matInput [matDatepicker]="vencimentoPicker" (click)="vencimentoPicker.open()" required readonly
+                     formControlName="vencimento" [min]="formComunicado.controls.data.value">
+              <mat-datepicker-toggle matSuffix [for]="vencimentoPicker"></mat-datepicker-toggle>
+              <mat-datepicker [disabled]="visualizar" #vencimentoPicker></mat-datepicker>
+              <mat-error *ngIf="formComunicado.controls.vencimento.invalid">
+                {{getMessageError(formComunicado.controls.vencimento, 'Data de Vencimento')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field appearance="outline" fxFlex="100">
+              <mat-label>Título</mat-label>
+              <input matInput type="text" class="mat-input-element" formControlName="titulo" autocomplete="off"
+                     required>
+              <mat-error *ngIf="formComunicado.controls.titulo.invalid">
+                {{getMessageError(formComunicado.controls.titulo, 'Título')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <div class="editor w-100">
+              <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+              </ngx-editor-menu>
+              <ngx-editor [editor]="editor" formControlName="corpo">
+              </ngx-editor>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+      <button mat-raised-button routerLink="/comunicado" type="button">
+        Voltar
+      </button>
+      <button mat-raised-button color="primary" type="submit" *ngIf="!this.visualizar">
+        Salvar
+      </button>
+      <button mat-raised-button color="primary" type="button" *ngIf="this.id" (click)="enviar()">
+        Enviar
+      </button>
+    </div>
+  </div>
+</form>

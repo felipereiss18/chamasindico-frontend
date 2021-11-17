@@ -74,9 +74,9 @@ export class MenuComponent implements OnInit {
             {name: 'Funcionário', link:'funcionario', icon: 'person'},
             {name: 'Unidades', link: 'unidade', icon: 'maps_home_work'},
             {name: 'Áreas Comuns', link: 'area-comum', icon: 'deck'},
+            {name: 'Comunicados', link:'comunicado', icon: 'campaign'},
           ]
         },
-        {name: 'Comunicados', link:'some-link', icon: 'campaign'},
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
         {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
         {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},

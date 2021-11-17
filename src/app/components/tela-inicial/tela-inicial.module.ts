@@ -6,19 +6,21 @@ import {SharedModule} from "../../shared/shared.module";
 import {NgxMaskModule} from "ngx-mask";
 import {NgxEditorModule} from "ngx-editor";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {ComunicadoModule} from "../comunicado/comunicado.module";
 
 @NgModule({
   declarations: [
     TelaInicialComponent
   ],
-  imports: [
-    TelaInicialRoutingModule,
-    CommonModule,
-    SharedModule,
-    NgxMaskModule.forRoot({}),
-    NgxEditorModule,
-    MatDatepickerModule
-  ],
+    imports: [
+        TelaInicialRoutingModule,
+        CommonModule,
+        SharedModule,
+        NgxMaskModule.forRoot({}),
+        NgxEditorModule,
+        MatDatepickerModule,
+        ComunicadoModule
+    ],
 })
 export class TelaInicialModule {
 
