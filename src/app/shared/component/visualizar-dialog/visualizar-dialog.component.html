@@ -1,0 +1,13 @@
+<div class="w-100">
+  <h4 mat-dialog-title class="fw-bold">
+    {{title}}
+  </h4>
+
+  <div mat-dialog-content>
+    {{message}}
+  </div>
+
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em">
+    <button mat-raised-button (click)="onCancel()">Ok</button>
+  </div>
+</div>

@@ -27,9 +27,7 @@ const maskConfig: Partial<IConfig> = {
     LoginComponent,
   ],
   imports: [
-    BrowserModule,
     FontAwesomeModule,
-    BrowserAnimationsModule,
     CoreModule,
     BrowserModule,
     HttpClientModule,
@@ -37,7 +35,6 @@ const maskConfig: Partial<IConfig> = {
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserModule,
     AppMaterialModule,
     HomeModule,
     NgxMaskModule.forRoot(maskConfig),
