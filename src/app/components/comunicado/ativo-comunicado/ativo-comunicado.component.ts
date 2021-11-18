@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ComunicadoPesqResp} from "../../../interfaces/pesquisa/comunicado-pesquisa";
 import {ComunicadoService} from "../../../services/comunicado/comunicado.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ConfirmationDialogModel} from "../../../shared/component/confirm-dialog/model/confirmation-dialog.model";
-import {ConfirmDialogComponent} from "../../../shared/component/confirm-dialog/confirm-dialog.component";
 import {VisualizarDialogModel} from "../../../shared/component/visualizar-dialog/model/visualizar-dialog.model";
 import {VisualizarDialogComponent} from "../../../shared/component/visualizar-dialog/visualizar-dialog.component";
 import {SnotifyPosition, SnotifyService} from "ng-snotify";
