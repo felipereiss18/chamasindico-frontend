@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BasicComponent} from "../../../shared/basic-component/basic-component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -140,7 +140,24 @@ export class FormularioComunicadoComponent extends BasicComponent implements OnI
     )
   }
 
-  enviar(): void {
+  enviar() {
+    if (this.id && this.verificarDataVencimento()) {
+      this.service.enviar(this.id).subscribe(
+        (res) => {
+          this.messageSucess('Comunicado enviado com sucesso.');
+        }, error => {
+          console.error(error);
+          this.messageError('Não foi possível enviar o comunicado.');
+        }
+      );
+    }
+  }
 
+  verificarDataVencimento(): boolean {
+    const data = new Date();
+
+    const vencimento = new Date(this.formComunicado.controls.vencimento.value);
+
+    return vencimento >= data;
   }
 }
