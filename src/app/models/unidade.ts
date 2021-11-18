@@ -1,5 +1,3 @@
-import {Bloco} from "./bloco";
-
 export class Unidade {
   id: number = 0;
   metragem: number = 0;

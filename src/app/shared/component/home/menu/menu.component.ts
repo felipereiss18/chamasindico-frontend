@@ -79,44 +79,29 @@ export class MenuComponent implements OnInit {
         },
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
         {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
-        {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},
+        {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
       ];
     }else if (perfil?.role === Roles.PROPRIE) {
       return [
         {name: 'Home', link:'', icon: 'home'},
         {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
-        {name: 'Comunicados', link:'some-link', icon: 'campaign'},
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
         {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
-        {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},
+        {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
       ];
     }else if (perfil?.role === Roles.INQUILINO) {
       return [
         {name: 'Home', link:'', icon: 'home'},
         {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
-        {name: 'Comunicados', link:'some-link', icon: 'campaign'},
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
         {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
-        {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},
+        {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
       ];
     }else if (perfil?.role === Roles.FUNCIONARIO) {
       return [
         {name: 'Home', link:'', icon: 'home'},
-        {name: 'Comunicados', link:'some-link', icon: 'campaign'},
-        {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
-        {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},
-      ];
-    }else if (perfil?.role === Roles.ZELADOR) {
-      return [
-        {name: 'Home', link:'', icon: 'home'},
-        {name: 'Usuários', link:'usuario', icon: 'person'},
-        {name: 'Condomínio', icon: 'apartment', subMenus: [
-            {name: 'Unidades', link: 'some-link', icon: 'maps_home_work'},
-            {name: 'Áreas Comuns', link: 'some-link', icon: 'deck'},
-          ]},
-        {name: 'Comunicados', link:'some-link', icon: 'campaign'},
-        {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
-        {name: 'Correspondência', link: 'some-link', icon: 'forward_to_inbox'},
+        {name: 'Ocorrências', link: '', icon: 'menu_book'},
+        {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
       ];
     }
     return [];

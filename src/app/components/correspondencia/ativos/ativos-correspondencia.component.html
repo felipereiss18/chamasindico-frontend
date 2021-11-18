@@ -1,0 +1,25 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5em">
+      <mat-icon>forward_to_inbox</mat-icon>
+      <span>Correspondências</span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list *ngIf="correspondencias.length > 0">
+      <mat-list-item *ngFor="let corresp of correspondencias">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5em">
+          <mat-icon mat-list-icon>mail</mat-icon>
+          <div>
+            <div mat-line>{{corresp.remetente}}</div>
+            <div mat-line>{{corresp.data | date: 'dd/MM/yyyy'}}</div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <div *ngIf="correspondencias.length == 0" fxLayout="row" fxLayoutAlign="center center">
+      <p>Nenhuma correspondência encontrada para retirada.</p>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,109 @@
+<mat-card>
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <h2>Consultar Correspondência</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutAlign="space-between none" style="width: 100%">
+      <form [formGroup]="consultarForm" (ngSubmit)="pesquisar()">
+        <div class="mat-elevation-z0 mb-2">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100 pb-1 pt-1">
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline" *ngIf="getUser().perfil?.role == roles.FUNCIONARIO">
+              <mat-label>Blocos</mat-label>
+              <mat-select formControlName="bloco">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let bloco of blocos" [value]="bloco.id">
+                  {{bloco.id}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline" *ngIf="getUser().perfil?.role == roles.FUNCIONARIO">
+              <mat-label>Unidade</mat-label>
+              <input matInput type="text" formControlName="unidade" autocomplete="off" mask="0000 || 000">
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Data</mat-label>
+              <input matInput [matDatepicker]="dataPicker" (click)="dataPicker.open()" readonly
+                     formControlName="data">
+              <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dataPicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Data de Entrega</mat-label>
+              <input matInput [matDatepicker]="entregaPicker" (click)="entregaPicker.open()" readonly
+                     formControlName="entrega">
+              <mat-datepicker-toggle matSuffix [for]="entregaPicker"></mat-datepicker-toggle>
+              <mat-datepicker #entregaPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100 pb-1 pt-1">
+            <mat-form-field class="mat-form-field" fxFlex="49" appearance="outline">
+              <mat-label>Remetente</mat-label>
+              <input class="mat-input-element" matInput formControlName="remetente" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="w-100 pb-1" fxLayout="row" fxLayoutGap="1.5em" fxLayoutAlign="end center">
+            <button mat-raised-button type="submit">
+              Pesquisar
+            </button>
+            <button mat-raised-button color="primary" routerLink="/correspondencia/adicionar" type="button"
+                  *ngIf="getUser().perfil?.role == roles.FUNCIONARIO">
+              Nova Correspondencia
+            </button>
+          </div>
+        </div>
+      </form>
+      <ng-container *ngIf="dataSource && dataSource.data.length != 0">
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="dataSource" class="w-100">
+            <ng-container matColumnDef="bloco">
+              <mat-header-cell *matHeaderCellDef>Bloco</mat-header-cell>
+              <mat-cell *matCellDef="let corresp">{{corresp.bloco}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="unidade">
+              <mat-header-cell *matHeaderCellDef>Unidade</mat-header-cell>
+              <mat-cell *matCellDef="let corresp">{{corresp.unidade}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="remetente">
+              <mat-header-cell *matHeaderCellDef>Remetente</mat-header-cell>
+              <mat-cell *matCellDef="let corresp">{{corresp.remetente}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="data">
+              <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+              <mat-cell *matCellDef="let corresp" [matTooltip]="corresp.funcionarioCriacao">
+                {{corresp.data | date: 'dd/MM/yyyy'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="entrega">
+              <mat-header-cell *matHeaderCellDef>Entrega</mat-header-cell>
+              <mat-cell *matCellDef="let corresp" [matTooltip]="corresp.funcionarioEntrega">
+                {{corresp.entrega | date: 'dd/MM/yyyy'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="acoes">
+              <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+              <mat-cell  *matCellDef="let corresp" fxLayout="row" fxLayoutGap="0.5em">
+                <mat-icon style="font-size: 24px; cursor: pointer" matTooltip="Entregar"
+                          (click)="entregar(corresp)" *ngIf="!corresp.entrega && getUser().perfil?.role == roles.FUNCIONARIO">
+                  mark_email_read
+                </mat-icon>
+                <fa-icon [icon]="faEdit" style="font-size: 21px;cursor: pointer" matTooltip="Editar"
+                         routerLink="/correspondencia/editar/{{corresp.id}}" *ngIf="!corresp.entrega && getUser().perfil?.role == roles.FUNCIONARIO">
+                </fa-icon>
+                <mat-icon style="font-size: 24px; cursor: pointer" matTooltip="Excluir"
+                          (click)="excluir(corresp)" *ngIf="!corresp.entrega && getUser().perfil?.role == roles.FUNCIONARIO">
+                  delete_forever
+                </mat-icon>
+                <mat-icon style="font-size: 24px;cursor: pointer" matTooltip="Visualizar"
+                          routerLink="/correspondencia/detalhar/{{corresp.id}}">
+                  feed_outline
+                </mat-icon>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let corresp; columns: displayColumns;"></mat-row>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>

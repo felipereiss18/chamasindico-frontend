@@ -7,6 +7,7 @@ import {NgxMaskModule} from "ngx-mask";
 import {NgxEditorModule} from "ngx-editor";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ComunicadoModule} from "../comunicado/comunicado.module";
+import {CorrespondenciaModule} from "../correspondencia/correspondencia.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {ComunicadoModule} from "../comunicado/comunicado.module";
         NgxMaskModule.forRoot({}),
         NgxEditorModule,
         MatDatepickerModule,
-        ComunicadoModule
+        ComunicadoModule,
+        CorrespondenciaModule
     ],
 })
 export class TelaInicialModule {
