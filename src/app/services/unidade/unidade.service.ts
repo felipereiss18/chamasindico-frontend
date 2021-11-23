@@ -38,17 +38,22 @@ export class UnidadeService extends BaseService<Unidade, number>{
   }
 
   buscarAlugueis(condominio: number, bloco: string, unidade: number): Observable<ResponseDto<Aluguel[]>> {
-    return this.http.get<ResponseDto<Aluguel[]>>(`${this.base}/${condominio}/${bloco}/${unidade}/alugueis`)
+    return this.http.get<ResponseDto<Aluguel[]>>(`${this.base}/${condominio}/${bloco}/${unidade}/alugueis`, this.options)
       .pipe(catchError(this.handleError));
   }
 
   buscarGaragem(condominio: number, bloco: string, unidade: number): Observable<ResponseDto<Garagem>> {
-    return this.http.get<ResponseDto<Garagem>>(`${this.base}/${condominio}/${bloco}/${unidade}/garagem`)
+    return this.http.get<ResponseDto<Garagem>>(`${this.base}/${condominio}/${bloco}/${unidade}/garagem`, this.options)
       .pipe(catchError(this.handleError));
   }
 
   salvarGaragem(condominio: number, bloco: string, unidade: number, garagem: Garagem): Observable<ResponseDto<any>> {
     return this.http.put<ResponseDto<any>>(`${this.base}/${condominio}/${bloco}/${unidade}/garagem`, garagem, this.options)
       .pipe(catchError(this.handleError));
+  }
+
+  buscarPorCondominoBloco(condominio: number, bloco: string): Observable<ResponseDto<Unidade[]>> {
+    return this.http.get<ResponseDto<Unidade[]>>(`${this.base}/${condominio}/${bloco}/listar`, this.options)
+      .pipe(catchError(this.handleError))
   }
 }

@@ -143,7 +143,7 @@ export class FormularioUnidadeComponent extends BasicComponent implements OnInit
 
   async salvarProprietario() {
 
-    if (this.proprietario.sindico !== this.formProprietario.controls.sindico.value && this.formProprietario.controls.sindico) {
+    if (this.proprietario.sindico !== this.formProprietario.controls.sindico.value && this.formProprietario.controls.sindico.value) {
       const hasSindico : any = await this.condominioService.buscarSindico(this.idCondominio).toPromise().then(
         res => {
           return res.data

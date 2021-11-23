@@ -70,8 +70,8 @@ export class FormularioFuncionarioComponent extends BasicComponent implements On
             let data = new Date(res.data.nascimento + ' ');
             this.formFuncionario.controls.nascimento.setValue(data.toISOString());
           }
-          this.situacao = res.data.usuario.situacao;
-          this.formFuncionario.controls.usuario.setValue(res.data.usuario.nome)
+          this.situacao = res.data.usuario?.situacao;
+          this.formFuncionario.controls.usuario.setValue(res.data.usuario?.nome)
         },
         error => {
           this.messageError('Não foi possível carregar os dados da Área Comum.');

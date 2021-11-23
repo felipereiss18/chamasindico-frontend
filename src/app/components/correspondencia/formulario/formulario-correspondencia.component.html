@@ -1,0 +1,113 @@
+<form [formGroup]="formCorresp" class="w-100" (ngSubmit)="salvar()">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <p class="fs-4 fw-bold mb-4">{{title}}</p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados Gerais</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field class="mat-form-field" fxFlex="35" appearance="outline">
+              <mat-label>Blocos</mat-label>
+              <mat-select formControlName="bloco" required (selectionChange)="buscarUnidade($event.value)">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let bloco of blocos" [value]="bloco.id">
+                  {{bloco.id}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formCorresp.controls.bloco.invalid">
+                {{getMessageError(formCorresp.controls.bloco, 'Bloco')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="35" appearance="outline">
+              <mat-label>Unidade</mat-label>
+              <mat-select formControlName="unidade" required>
+                <mat-option></mat-option>
+                <mat-option *ngFor="let unidade of unidades" [value]="unidade.id">
+                  {{unidade.id}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formCorresp.controls.unidade.invalid">
+                {{getMessageError(formCorresp.controls.unidade, 'Unidade')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="30" appearance="outline">
+              <mat-label>Data</mat-label>
+              <input matInput [matDatepicker]="dataPicker" (click)="dataPicker.open()" required readonly
+                     formControlName="data">
+              <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
+              <mat-datepicker [disabled]="visualizar" #dataPicker></mat-datepicker>
+              <mat-error *ngIf="formCorresp.controls.data.invalid">
+                {{getMessageError(formCorresp.controls.data, 'Data')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field appearance="outline" fxFlex="70">
+              <mat-label>Remetente</mat-label>
+              <input matInput type="text" class="mat-input-element" formControlName="remetente" autocomplete="off"
+                     required>
+              <mat-error *ngIf="formCorresp.controls.remetente.invalid">
+                {{getMessageError(formCorresp.controls.remetente, 'Remetente')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="35" appearance="outline">
+              <mat-label>Gênero</mat-label>
+              <mat-select formControlName="genero" required>
+                <mat-option></mat-option>
+                <mat-option *ngFor="let genero of generos" [value]="genero.id">
+                  {{genero.descricao}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formCorresp.controls.genero.invalid">
+                {{getMessageError(formCorresp.controls.genero, 'Gênero')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="w-100" *ngIf="this.visualizar">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados Controle</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field class="mat-form-field" fxFlex="35" appearance="outline">
+              <mat-label>Funcionário Criação</mat-label>
+              <input matInput type="text" formControlName="funcionarioCriacao" autocomplete="off">
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="35">
+              <mat-label>Funcionário da Entrega</mat-label>
+              <input matInput type="text" formControlName="funcionarioEntrega" autocomplete="off">
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="30" appearance="outline">
+              <mat-label>Data de Entrega</mat-label>
+              <input matInput [matDatepicker]="entregaPicker" (click)="entregaPicker.open()" readonly
+                     formControlName="entrega">
+              <mat-datepicker-toggle matSuffix [for]="entregaPicker"></mat-datepicker-toggle>
+              <mat-datepicker [disabled]="visualizar" #entregaPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+      <button mat-raised-button routerLink="/correspondencia" type="button">
+        Voltar
+      </button>
+      <button mat-raised-button color="primary" type="submit" *ngIf="!this.visualizar">
+        Salvar
+      </button>
+    </div>
+  </div>
+</form>

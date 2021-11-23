@@ -3,22 +3,22 @@ import {Condominio} from "./condominio";
 
 export class Funcionario {
 
-  usuario: Usuario;
+  usuario: Usuario | undefined;
   condominio: Condominio | undefined;
-  nome: string;
-  cpf: string;
-  nascimento: string;
-  email: string;
-  telefone: string;
+  nome: string | undefined;
+  cpf: string | undefined;
+  nascimento: string | undefined;
+  email: string | undefined;
+  telefone: string | undefined;
 
 
   constructor(
-    usuario: Usuario,
-    nome: string,
-    cpf: string,
-    nascimento: string,
-    email: string,
-    telefone: string,
+    usuario?: Usuario,
+    nome?: string,
+    cpf?: string,
+    nascimento?: string,
+    email?: string,
+    telefone?: string,
     condominio?: Condominio,
   ) {
     this.usuario = usuario;

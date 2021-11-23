@@ -7,7 +7,6 @@ import {SnotifyService} from "ng-snotify";
 import {UserService} from "../../../core/auth/user/user.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {faEdit} from "@fortawesome/free-solid-svg-icons"
-import {FuncionarioPesqReq} from "../../../interfaces/pesquisa/funcionario-pesquisa";
 import {ComunicadoPesqReq, ComunicadoPesqResp} from "../../../interfaces/pesquisa/comunicado-pesquisa";
 import {ComunicadoService} from "../../../services/comunicado/comunicado.service";
 

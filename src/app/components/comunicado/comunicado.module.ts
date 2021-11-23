@@ -7,7 +7,7 @@ import {NgxEditorModule} from "ngx-editor";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {ComunicadoRouting} from "./comunicado-routing";
+import {ComunicadoRoutingModule} from "./comunicado-routing.module";
 import { FormularioComunicadoComponent } from './formulario/formulario-comunicado.component';
 import { AtivoComunicadoComponent } from './ativo-comunicado/ativo-comunicado.component';
 
@@ -28,7 +28,7 @@ import { AtivoComunicadoComponent } from './ativo-comunicado/ativo-comunicado.co
         MatDatepickerModule,
         FontAwesomeModule,
         MatSlideToggleModule,
-        ComunicadoRouting,
+        ComunicadoRoutingModule,
     ]
 })
 export class ComunicadoModule {

@@ -128,7 +128,7 @@ export class FormularioAreaComumComponent extends BasicComponent implements OnIn
 
     if (this.formAreaComum.valid) {
       const areaComum = new AreaComum(
-        {id: 12}, //TODO: Colocar o id do condominio do usuario logado
+        {id: this.getUser().condominio},
         undefined,
         this.formAreaComum.controls.nome.value,
         this.formAreaComum.controls.locacao.value,
