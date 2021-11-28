@@ -57,7 +57,7 @@ export class MenuComponent implements OnInit {
   private criarMenu(perfil: Perfil | null): Menu[] {
     if (perfil?.role === Roles.ADMIN){
       return [
-        {name: 'Home', link:'', icon: 'home'},
+        {name: 'Mural', link:'', icon: 'newspaper'},
         {name: 'Configurações', icon: 'settings_applications',
           subMenus: [
             {name: 'Condomínios', link:'condominio', icon: 'apartment'},
@@ -67,7 +67,7 @@ export class MenuComponent implements OnInit {
       ];
     }else if (perfil?.role === Roles.SINDICO) {
       return [
-        {name: 'Home', link:'', icon: 'home'},
+        {name: 'Mural', link:'', icon: 'newspaper'},
         {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
         {name: 'Condomínio', icon: 'apartment',
           subMenus: [
@@ -78,29 +78,29 @@ export class MenuComponent implements OnInit {
           ]
         },
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
-        {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
+        {name: 'Ocorrências', link: 'ocorrencia', icon: 'menu_book'},
         {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
       ];
     }else if (perfil?.role === Roles.PROPRIE) {
       return [
-        {name: 'Home', link:'', icon: 'home'},
+        {name: 'Mural', link:'', icon: 'newspaper'},
         {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
-        {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
+        {name: 'Ocorrências', link: 'ocorrencia', icon: 'menu_book'},
         {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
       ];
     }else if (perfil?.role === Roles.INQUILINO) {
       return [
-        {name: 'Home', link:'', icon: 'home'},
+        {name: 'Mural', link:'', icon: 'newspaper'},
         {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
-        {name: 'Ocorrências', link: 'some-link', icon: 'menu_book'},
+        {name: 'Ocorrências', link: 'ocorrencia', icon: 'menu_book'},
         {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
       ];
     }else if (perfil?.role === Roles.FUNCIONARIO) {
       return [
-        {name: 'Home', link:'', icon: 'home'},
-        {name: 'Ocorrências', link: '', icon: 'menu_book'},
+        {name: 'Mural', link:'', icon: 'newspaper'},
+        {name: 'Ocorrências', link: 'ocorrencia', icon: 'menu_book'},
         {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
       ];
     }

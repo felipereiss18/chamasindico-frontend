@@ -1,0 +1,104 @@
+<form [formGroup]="formOcorre" class="w-100" (ngSubmit)="salvar()">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <p class="fs-4 fw-bold mb-4">{{title}}</p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados Gerais</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Bloco Destino</mat-label>
+              <mat-select formControlName="bloco" (selectionChange)="buscarUnidade($event.value)">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let bloco of blocos" [value]="bloco.id">
+                  {{bloco.id}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Unidade Destino</mat-label>
+              <mat-select formControlName="unidade">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let unidade of unidades" [value]="unidade.id">
+                  {{unidade.id}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Data</mat-label>
+              <input matInput [matDatepicker]="dataPicker" (click)="dataPicker.open()" required readonly
+                     formControlName="data">
+              <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
+              <mat-datepicker [disabled]="visualizar" #dataPicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Tipo</mat-label>
+              <mat-select formControlName="tipo" required>
+                <mat-option></mat-option>
+                <mat-option value="1">Barulho</mat-option>
+                <mat-option value="3">Mudança</mat-option>
+                <mat-option value="2">Reparo</mat-option>
+                <mat-option value="4">Outros</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formOcorre.controls.tipo.invalid">
+                {{getMessageError(formOcorre.controls.tipo, 'Tipo')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Descrição</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="editor w-100">
+            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" [disabled]="this.visualizar">
+            </ngx-editor-menu>
+            <ngx-editor [editor]="editor" formControlName="descricao" [disabled]="this.visualizar" placeholder="">
+            </ngx-editor>
+            <mat-error *ngIf="formOcorre.controls.descricao.invalid">
+              {{getMessageError(formOcorre.controls.descricao, 'Descrição')}}
+            </mat-error>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="w-100" *ngIf="this.visualizar && dataResposta">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Resposta</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="editor w-100">
+            {{formOcorre.controls.resposta.value}}
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+      <button mat-raised-button routerLink="/ocorrencia" type="button">
+        Voltar
+      </button>
+      <button mat-raised-button color="primary" type="submit" *ngIf="!this.visualizar">
+        Salvar
+      </button>
+    </div>
+  </div>
+</form>

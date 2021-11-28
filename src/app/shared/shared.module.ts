@@ -10,13 +10,15 @@ import {ConfirmDialogComponent} from './component/confirm-dialog/confirm-dialog.
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "./adapter/AppDateAdapter";
 import {VisualizarDialogComponent} from "./component/visualizar-dialog/visualizar-dialog.component";
+import { ConfirmInputDialogComponent } from './component/confirm-input-dialog/confirm-input-dialog.component';
 
 registerLocaleData(localePT, 'pt-BR');
 
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
-    VisualizarDialogComponent
+    VisualizarDialogComponent,
+    ConfirmInputDialogComponent
   ],
   exports: [
     AppMaterialModule,

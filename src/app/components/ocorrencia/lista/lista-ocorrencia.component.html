@@ -1,0 +1,111 @@
+<mat-card>
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <h2>Consultar Ocorrência</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutAlign="space-between none" style="width: 100%">
+      <form [formGroup]="consultarForm" (ngSubmit)="pesquisar()">
+        <div class="mat-elevation-z0 mb-2">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100 pb-1 pt-1">
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Situacao</mat-label>
+              <mat-select formControlName="situacao">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let situacao of situacoes" [value]="situacao.id">
+                  {{situacao.descricao}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Tipo</mat-label>
+              <mat-select formControlName="tipo">
+                <mat-option></mat-option>
+                <mat-option value="1">Barulho</mat-option>
+                <mat-option value="3">Mudança</mat-option>
+                <mat-option value="2">Reparo</mat-option>
+                <mat-option value="4">Outros</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Data</mat-label>
+              <input matInput [matDatepicker]="dataPicker" (click)="dataPicker.open()" readonly
+                     formControlName="data">
+              <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dataPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100 pb-1 pt-1">
+            <mat-form-field class="mat-form-field" fxFlex="49" appearance="outline">
+              <mat-label>Descrição</mat-label>
+              <input class="mat-input-element" matInput formControlName="descricao" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="w-100 pb-1" fxLayout="row" fxLayoutGap="1.5em" fxLayoutAlign="end center">
+            <button mat-raised-button type="submit">
+              Pesquisar
+            </button>
+            <button mat-raised-button color="primary" routerLink="/ocorrencia/adicionar" type="button">
+              Nova Ocorrência
+            </button>
+          </div>
+        </div>
+      </form>
+      <ng-container *ngIf="dataSource && dataSource.data.length != 0">
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="dataSource" class="w-100">
+            <ng-container matColumnDef="bloco">
+              <mat-header-cell *matHeaderCellDef>Bloco</mat-header-cell>
+              <mat-cell *matCellDef="let ocorr">{{ocorr.bloco}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="unidade">
+              <mat-header-cell *matHeaderCellDef>Unidade</mat-header-cell>
+              <mat-cell *matCellDef="let ocorr">{{ocorr.unidade}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="situacao">
+              <mat-header-cell *matHeaderCellDef>Situacao</mat-header-cell>
+              <mat-cell *matCellDef="let ocorr">{{ocorr.situacao.descricao}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="tipo">
+              <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
+              <mat-cell *matCellDef="let ocorr">
+                {{verificarTipo(ocorr.tipo)}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="descricao">
+              <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+              <mat-cell *matCellDef="let ocorr">
+                {{ocorr.data | date: 'dd/MM/yyyy'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="acoes">
+              <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+              <mat-cell  *matCellDef="let ocorr" fxLayout="row" fxLayoutGap="0.5em">
+                <mat-icon style="font-size: 24px; cursor: pointer" matTooltip="Analisar"
+                          (click)="analise(ocorr)" *ngIf="ocorr.situacao.id === 1 && getUser().perfil?.role == roles.SINDICO">
+                  plagiarism
+                </mat-icon>
+                <mat-icon style="font-size: 24px; cursor: pointer" matTooltip="Concluir"
+                          (click)="concluir(ocorr)" *ngIf="ocorr.situacao.id === 2 && getUser().perfil?.role == roles.SINDICO">
+                  check_circle_outline
+                </mat-icon>
+                <fa-icon [icon]="faEdit" style="font-size: 21px;cursor: pointer" matTooltip="Editar"
+                         routerLink="/ocorrencia/editar/{{ocorr.id}}" *ngIf="ocorr.situacao.id === 1 && ocorr.dono">
+                </fa-icon>
+                <mat-icon style="font-size: 24px; cursor: pointer" matTooltip="Excluir"
+                          (click)="excluir(ocorr)" *ngIf="ocorr.situacao.id === 1 && ocorr.dono">
+                  delete_forever
+                </mat-icon>
+                <mat-icon style="font-size: 24px;cursor: pointer" matTooltip="Visualizar"
+                          routerLink="/ocorrencia/detalhar/{{ocorr.id}}">
+                  feed_outline
+                </mat-icon>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let ocorr; columns: displayColumns;"></mat-row>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>

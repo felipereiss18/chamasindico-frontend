@@ -1,0 +1,29 @@
+<form [formGroup]="form">
+  <div class="w-100">
+  <h4 mat-dialog-title class="fw-bold">
+    {{title}}
+  </h4>
+
+  <div mat-dialog-content>
+    <p>{{message}}</p>
+    <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+      <div class="editor w-100">
+        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" >
+        </ngx-editor-menu>
+        <ngx-editor [editor]="editor" formControlName="dado" placeholder=""  [ngStyle]="{'border-color': obrigatorio ? 'red' : 'black'}">
+        </ngx-editor>
+        <mat-error *ngIf="obrigatorio">
+          Campo obrigatório.
+        </mat-error>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em">
+    <button mat-raised-button (click)="onCancel()">Não</button>
+    <button mat-raised-button color="primary" (click)="onConfirm()">Sim</button>
+  </div>
+  </div>
+</form>
