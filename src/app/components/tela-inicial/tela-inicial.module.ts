@@ -8,6 +8,7 @@ import {NgxEditorModule} from "ngx-editor";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ComunicadoModule} from "../comunicado/comunicado.module";
 import {CorrespondenciaModule} from "../correspondencia/correspondencia.module";
+import {OcorrenciaModule} from "../ocorrencia/ocorrencia.module";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {CorrespondenciaModule} from "../correspondencia/correspondencia.module";
         NgxEditorModule,
         MatDatepickerModule,
         ComunicadoModule,
-        CorrespondenciaModule
+        CorrespondenciaModule,
+        OcorrenciaModule
     ],
 })
 export class TelaInicialModule {

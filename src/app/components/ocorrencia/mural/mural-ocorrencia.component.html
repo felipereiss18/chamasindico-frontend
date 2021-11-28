@@ -1,0 +1,70 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5em">
+      <mat-icon>menu_book</mat-icon>
+      <span>Ocorrência</span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Condomínio" *ngIf="admCondominio">
+        <mat-list *ngIf="condominoOcorrencias.length > 0">
+          <mat-list-item *ngFor="let ocorr of condominoOcorrencias">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5em" style="cursor: pointer" (click)="visualizar(ocorr)">
+              <mat-icon mat-list-icon matTooltip="{{ocorr.situacao ? ocorr.situacao.descricao : ''}}">
+                {{verificarIcone(ocorr.situacao)}}
+              </mat-icon>
+              <div>
+                <div mat-line>{{verificarTipo(ocorr.tipo)}} - {{criarDescricao(ocorr)}}</div>
+                <div mat-line>{{ocorr.data | date: 'dd/MM/yyyy'}}</div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+        <div *ngIf="condominoOcorrencias.length == 0" fxLayout="row" fxLayoutAlign="center center">
+          <p>Nenhuma ocorrência encontrada.</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Minhas">
+        <mat-list *ngIf="minhasOcorrencias.length > 0">
+          <mat-list-item *ngFor="let ocorr of minhasOcorrencias">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5em" style="cursor: pointer" (click)="visualizar(ocorr)">
+              <mat-icon mat-list-icon matTooltip="{{ocorr.situacao ? ocorr.situacao.descricao : ''}}">
+                {{verificarIcone(ocorr.situacao)}}
+              </mat-icon>
+              <div>
+                <div mat-line>{{verificarTipo(ocorr.tipo)}}</div>
+                <div mat-line>{{ocorr.data | date: 'dd/MM/yyyy'}}</div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+        <div *ngIf="minhasOcorrencias.length == 0" fxLayout="row" fxLayoutAlign="center center">
+          <p>Nenhuma ocorrência encontrada.</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Para Mim">
+        <mat-list *ngIf="paraMimOcorrencias.length > 0">
+          <mat-list-item *ngFor="let ocorr of paraMimOcorrencias">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5em" style="cursor: pointer" (click)="visualizar(ocorr)">
+              <mat-icon mat-list-icon matTooltip="{{ocorr.situacao ? ocorr.situacao.descricao : ''}}">
+                {{verificarIcone(ocorr.situacao)}}
+              </mat-icon>
+              <div>
+                <div mat-line>{{verificarTipo(ocorr.tipo)}}</div>
+                <div mat-line>{{ocorr.data | date: 'dd/MM/yyyy'}}</div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+        <div *ngIf="paraMimOcorrencias.length == 0" fxLayout="row" fxLayoutAlign="center center">
+          <p>Nenhuma ocorrência encontrada.</p>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+  </mat-card-content>
+</mat-card>
