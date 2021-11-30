@@ -75,6 +75,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
   ],
 
   declarations: [
+
   ]
 })
 export class AppMaterialModule {

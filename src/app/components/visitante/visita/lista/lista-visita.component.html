@@ -1,0 +1,45 @@
+<mat-card>
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <h2>Lista de Visitas</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutAlign="space-between none" style="width: 100%">
+      <ng-container *ngIf="dataSource && dataSource.data.length != 0">
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="dataSource" class="w-100">
+            <ng-container matColumnDef="bloco">
+              <mat-header-cell *matHeaderCellDef>Bloco</mat-header-cell>
+              <mat-cell *matCellDef="let visita">{{visita.bloco}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="unidade">
+              <mat-header-cell *matHeaderCellDef>Unidade</mat-header-cell>
+              <mat-cell *matCellDef="let visita">{{visita.unidade}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="data">
+              <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+              <mat-cell *matCellDef="let visita">
+                  {{visita.data | date: 'dd/MM/yyyy HH:mm'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="areaComum">
+              <mat-header-cell *matHeaderCellDef>Área Comum</mat-header-cell>
+              <mat-cell *matCellDef="let visita">
+                {{visita.areaComum ? 'Sim' : 'Não'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="acoes">
+              <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+              <mat-cell  *matCellDef="let visita" fxLayout="row" fxLayoutGap="0.5em">
+                <mat-icon style="cursor: pointer" matTooltip="Visitas" (click)="deletar(visita.data)">
+                  delete_forever
+                </mat-icon>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let visit; columns: displayColumns;"></mat-row>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>

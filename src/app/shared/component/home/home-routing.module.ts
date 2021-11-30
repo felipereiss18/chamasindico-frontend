@@ -61,6 +61,12 @@ const homeRoute: Routes = [
         loadChildren: () => import('../../../components/ocorrencia/ocorrencia.module')
           .then(m => m.OcorrenciaModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'visitante',
+        loadChildren: () => import('../../../components/visitante/visitante.module')
+          .then(m => m.VisitanteModule),
+        canActivate: [AuthGuard]
       }
     ]
   }

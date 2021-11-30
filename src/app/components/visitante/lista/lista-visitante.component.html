@@ -1,0 +1,69 @@
+<mat-card>
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <h2>Consultar Visitante</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutAlign="space-between none" style="width: 100%">
+      <form [formGroup]="consultarForm" (ngSubmit)="pesquisar()">
+        <div class="mat-elevation-z0 mb-2">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em" class="w-100 pb-1 pt-1">
+            <mat-form-field class="mat-form-field" fxFlex="30" appearance="outline">
+              <mat-label>CPF</mat-label>
+              <input class="mat-input-element" matInput formControlName="documento" autocomplete="off" mask="000.000.000-00">
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="70" appearance="outline">
+              <mat-label>Nome</mat-label>
+              <input class="mat-input-element" matInput formControlName="nome" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="w-100 pb-1" fxLayout="row" fxLayoutGap="1.5em" fxLayoutAlign="end center">
+            <button mat-raised-button type="submit">
+              Pesquisar
+            </button>
+            <button mat-raised-button color="primary" routerLink="/visitante/adicionar" type="button">
+              Liberar Acesso
+            </button>
+          </div>
+        </div>
+      </form>
+      <ng-container *ngIf="dataSource && dataSource.data.length != 0">
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="dataSource" class="w-100">
+            <ng-container matColumnDef="documento">
+              <mat-header-cell *matHeaderCellDef>CPF</mat-header-cell>
+              <mat-cell *matCellDef="let visit">{{visit.documento | mask: '000.000.000-00'}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="nome">
+              <mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
+              <mat-cell *matCellDef="let visit">{{visit.nome}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="telefone">
+              <mat-header-cell *matHeaderCellDef>Telefone</mat-header-cell>
+              <mat-cell *matCellDef="let visit">
+                <ng-container *ngIf="visit.telefone.length === 10">
+                  {{visit.telefone | mask: '(00) 0000-0000'}}
+                </ng-container>
+                <ng-container *ngIf="visit.telefone.length === 11">
+                  {{visit.telefone | mask: '(00) 0000-00000'}}
+                </ng-container>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="acoes">
+              <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+              <mat-cell  *matCellDef="let visit" fxLayout="row" fxLayoutGap="0.5em">
+                <mat-icon style="cursor: pointer" matTooltip="Visitas" (click)="listarVisitas(visit.documento)">
+                  format_list_bulleted
+                </mat-icon>
+                <fa-icon [icon]="faEdit" style="font-size: 21px;cursor: pointer" matTooltip="Editar"
+                         (click)="editar(visit.documento)">
+                </fa-icon>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let visit; columns: displayColumns;"></mat-row>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>
