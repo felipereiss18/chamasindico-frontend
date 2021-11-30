@@ -1,0 +1,91 @@
+<form [formGroup]="formVisitante" class="w-100" >
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <p class="fs-4 fw-bold mb-4">{{title}}</p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados do Visitante</p>
+        <button mat-mini-fab color="primary" type="button" (click)="adicionarVisitante()" matTooltip="Adicionar Visitante">
+          <mat-icon>group_add</mat-icon>
+        </button>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field class="mat-form-field" fxFlex="30" appearance="outline">
+              <mat-label>CPF</mat-label>
+              <input class="mat-input-element" matInput formControlName="documento" autocomplete="off"
+                     mask="000.000.000-00" (keyup.enter)="buscarVisitante($event)" #documentoInput>
+              <mat-icon style="cursor: pointer" (click)="pesquisarVisitante(documentoInput.value)" matSuffix>search</mat-icon>
+              <mat-error *ngIf="formVisitante.controls.documento.invalid">
+                {{getMessageError(formVisitante.controls.documento, 'CPF')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="70" appearance="outline">
+              <mat-label>Nome</mat-label>
+              <input class="mat-input-element" matInput formControlName="nome" autocomplete="off">
+              <mat-error *ngIf="formVisitante.controls.nome.invalid">
+                {{getMessageError(formVisitante.controls.nome, 'Nome')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados da Localidade</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-slide-toggle formControlName="areaComum" color="primary">
+              O visitante utilizará áreas comuns do condomínio
+            </mat-slide-toggle>
+          </div>
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Bloco Destino</mat-label>
+              <mat-select formControlName="bloco" (selectionChange)="buscarUnidade($event.value)">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let bloco of blocos" [value]="bloco.id">
+                  {{bloco.id}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formVisitante.controls.bloco.invalid">
+                {{getMessageError(formVisitante.controls.bloco, 'Bloco')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Unidade Destino</mat-label>
+              <mat-select formControlName="unidade">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let unidade of unidades" [value]="unidade.id">
+                  {{unidade.id}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formVisitante.controls.unidade.invalid">
+                {{getMessageError(formVisitante.controls.unidade, 'Unidade')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+      <button mat-raised-button routerLink="/visitante" type="button">
+        Voltar
+      </button>
+      <button mat-raised-button color="primary" type="button" (click)="salvar()" *ngIf="!this.visualizar">
+        Salvar
+      </button>
+    </div>
+  </div>
+</form>

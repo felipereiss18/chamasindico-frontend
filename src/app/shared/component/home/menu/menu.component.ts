@@ -80,6 +80,7 @@ export class MenuComponent implements OnInit {
         {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
         {name: 'Ocorrências', link: 'ocorrencia', icon: 'menu_book'},
         {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
+        {name: 'Visitante', link: 'visitante', icon: 'group'},
       ];
     }else if (perfil?.role === Roles.PROPRIE) {
       return [
@@ -102,6 +103,7 @@ export class MenuComponent implements OnInit {
         {name: 'Mural', link:'', icon: 'newspaper'},
         {name: 'Ocorrências', link: 'ocorrencia', icon: 'menu_book'},
         {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
+        {name: 'Visitante', link: 'visitante', icon: 'group'},
       ];
     }
     return [];

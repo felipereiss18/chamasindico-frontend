@@ -1,0 +1,55 @@
+<form [formGroup]="formVisitante" class="w-100" (ngSubmit)="onConfirm()">
+
+  <h4 mat-dialog-title class="fw-bold">
+    {{title}}
+  </h4>
+
+  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">Dados Gerais</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+              <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+                <mat-label>CPF</mat-label>
+                <input class="mat-input-element" matInput formControlName="documento" autocomplete="off"
+                       mask="000.000.000-00">
+                <mat-error *ngIf="formVisitante.controls.documento.invalid">
+                  {{getMessageError(formVisitante.controls.documento, 'CPF')}}
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="mat-form-field" fxFlex="50" appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input class="mat-input-element" matInput formControlName="nome" autocomplete="off">
+                <mat-error *ngIf="formVisitante.controls.nome.invalid">
+                  {{getMessageError(formVisitante.controls.nome, 'Nome')}}
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+                <mat-label>Telefone</mat-label>
+                <input class="mat-input-element" matInput formControlName="telefone" autocomplete="off"
+                       mask="(00) 0000-0000 || (00) 00000-0000">
+                <mat-error *ngIf="formVisitante.controls.documento.invalid">
+                  {{getMessageError(formVisitante.controls.documento, 'Telefone')}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+      <button mat-raised-button (click)="onCancel()" type="button">
+        Cancelar
+      </button>
+      <button mat-raised-button color="primary" type="submit">
+        Salvar
+      </button>
+    </div>
+  </div>
+</form>
