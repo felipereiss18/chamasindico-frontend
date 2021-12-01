@@ -67,6 +67,12 @@ const homeRoute: Routes = [
         loadChildren: () => import('../../../components/visitante/visitante.module')
           .then(m => m.VisitanteModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'agendamento',
+        loadChildren: () => import('../../../components/agendamento/agendamento.module')
+          .then(m => m.AgendamentoModule),
+        canActivate: [AuthGuard]
       }
     ]
   }

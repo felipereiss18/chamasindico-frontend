@@ -1,0 +1,76 @@
+<mat-card>
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <h2>Agendamento</h2>
+  </mat-card-title>
+
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutAlign="center start">
+      <div fxFlex="30">
+        <mat-calendar [minDate]="dataMinima" (selectedChange)="buscarAgendamentos($event)"></mat-calendar>
+      </div>
+      <div fxFlex="70">
+        <form [formGroup]="formAgendamento" class="w-100">
+          <div fxLayout="row" fxLayoutAlign="end center" *ngIf="this.dataSelecionada" class="mb-2">
+            <button mat-mini-fab color="primary" type="button" (click)="criarAgendamento()" matTooltip="Agendar"
+                    *ngIf="getUser().perfil?.role !== roles.FUNCIONARIO">
+              <mat-icon>event_available</mat-icon>
+            </button>
+          </div>
+          <div style="width: 90%; margin-left: 5em" >
+            <ng-container *ngIf="agendamentos && agendamentos.data.length != 0">
+              <div class="mat-elevation-z2 w-100">
+                <table mat-table [dataSource]="agendamentos" class="w-100">
+                  <ng-container matColumnDef="bloco">
+                    <mat-header-cell *matHeaderCellDef>Bloco</mat-header-cell>
+                    <mat-cell *matCellDef="let agendamento">{{agendamento.bloco}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="unidade">
+                    <mat-header-cell *matHeaderCellDef>Unidade</mat-header-cell>
+                    <mat-cell *matCellDef="let agendamento">{{agendamento.unidade}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="areaComum">
+                    <mat-header-cell *matHeaderCellDef>Area Comum</mat-header-cell>
+                    <mat-cell *matCellDef="let agendamento">{{agendamento.areaComum}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="inicio">
+                    <mat-header-cell *matHeaderCellDef>Hora Ínicio</mat-header-cell>
+                    <mat-cell *matCellDef="let agendamento">
+                      {{formatarHora(agendamento.inicio)}}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="termino">
+                    <mat-header-cell *matHeaderCellDef>Hora Termino</mat-header-cell>
+                    <mat-cell *matCellDef="let agendamento">
+                      {{formatarHora(agendamento.termino)}}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="confirmado">
+                    <mat-header-cell *matHeaderCellDef>Confirmado</mat-header-cell>
+                    <mat-cell *matCellDef="let agendamento">
+                      {{agendamento.necessariaConfirmacao ? (agendamento.confirmacao ? 'Sim' : 'Não') : ''}}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="acoes">
+                    <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+                    <mat-cell  *matCellDef="let agendamento" fxLayout="row" fxLayoutGap="0.5em">
+                      <fa-icon [icon]="faEdit" style="font-size: 21px;cursor: pointer" matTooltip="Editar" *ngIf="agendamento.dono"
+                               (click)="editar(agendamento)">
+                      </fa-icon>
+                      <mat-icon style="font-size: 24px; cursor: pointer" matTooltip="Excluir"
+                                (click)="excluir(agendamento)" *ngIf="agendamento.dono">
+                        delete_forever
+                      </mat-icon>
+                    </mat-cell>
+                  </ng-container>
+                  <mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></mat-header-row>
+                  <mat-row *matRowDef="let agendamento; columns: displayColumns;"></mat-row>
+                </table>
+              </div>
+            </ng-container>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-card-content>
+
+</mat-card>

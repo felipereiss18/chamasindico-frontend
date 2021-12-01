@@ -1,0 +1,81 @@
+<form [formGroup]="formAgendamento" class="w-100" (ngSubmit)="salvar()">
+  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="2em">
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-5 fw-bold">{{title}}</p>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="w-100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Área Comum</mat-label>
+              <mat-select formControlName="areaComum" required (selectionChange)="selecionarAreaComum($event.value)">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let area of areaComuns" [value]="area.id">
+                  {{area.nome}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formAgendamento.controls.areaComum.invalid">
+                {{getMessageError(formAgendamento.controls.areaComum, 'Área Comum')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline">
+              <mat-label>Data</mat-label>
+              <input matInput [matDatepicker]="dataPicker" (click)="dataPicker.open()" required readonly
+                     formControlName="data" [min]="this.dataMinima">
+              <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
+              <mat-datepicker [disabled]="this.dado.visualizar" #dataPicker></mat-datepicker>
+              <mat-error *ngIf="formAgendamento.controls.data.invalid">
+                {{getMessageError(formAgendamento.controls.data, 'Data')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline" *ngIf="mostrarCamposHora">
+              <mat-label>Início</mat-label>
+              <input matInput type="time" formControlName="inicio" required [min]="horaMinima">
+              <mat-error *ngIf="formAgendamento.controls.inicio.invalid">
+                {{getMessageError(formAgendamento.controls.inicio, 'Início')}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mat-form-field" fxFlex="25" appearance="outline" *ngIf="mostrarCamposHora">
+              <mat-label>Termino</mat-label>
+              <input matInput type="time" formControlName="termino" required [max]="horaMaxima">
+              <mat-error *ngIf="formAgendamento.controls.termino.invalid">
+                {{getMessageError(formAgendamento.controls.termino, 'Termino')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="w-100">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+        <p fxFlex="95" class="fs-6 fw-bold">Observação</p>
+      </mat-card-title>
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+          <div class="editor w-100">
+            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" [disabled]="this.dado.visualizar">
+            </ngx-editor-menu>
+            <ngx-editor [editor]="editor" formControlName="observacao" [disabled]="this.dado.visualizar" placeholder="">
+            </ngx-editor>
+            <mat-error *ngIf="formAgendamento.controls.observacao.invalid">
+              {{getMessageError(formAgendamento.controls.observacao, 'Observação')}}
+            </mat-error>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em" class="w-100">
+      <button mat-raised-button (click)="onCancel()" type="button">
+        Cancelar
+      </button>
+      <button mat-raised-button color="primary" type="submit" *ngIf="!this.dado.visualizar">
+        Salvar
+      </button>
+    </div>
+  </div>
+</form>

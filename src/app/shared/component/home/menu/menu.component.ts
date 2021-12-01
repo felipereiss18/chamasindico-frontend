@@ -68,7 +68,6 @@ export class MenuComponent implements OnInit {
     }else if (perfil?.role === Roles.SINDICO) {
       return [
         {name: 'Mural', link:'', icon: 'newspaper'},
-        {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
         {name: 'Condomínio', icon: 'apartment',
           subMenus: [
             {name: 'Funcionário', link:'funcionario', icon: 'person'},
@@ -77,24 +76,23 @@ export class MenuComponent implements OnInit {
             {name: 'Comunicados', link:'comunicado', icon: 'campaign'},
           ]
         },
-        {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
+        {name: 'Reserva de Espaço', link: 'agendamento', icon: 'today'},
         {name: 'Ocorrências', link: 'ocorrencia', icon: 'menu_book'},
         {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
         {name: 'Visitante', link: 'visitante', icon: 'group'},
+        {name: 'Relatório', link: 'relatorio', icon: 'equalizer'}
       ];
     }else if (perfil?.role === Roles.PROPRIE) {
       return [
         {name: 'Mural', link:'', icon: 'newspaper'},
-        {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
-        {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
+        {name: 'Reserva de Espaço', link: 'agendamento', icon: 'today'},
         {name: 'Ocorrências', link: 'ocorrencia', icon: 'menu_book'},
         {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
       ];
     }else if (perfil?.role === Roles.INQUILINO) {
       return [
         {name: 'Mural', link:'', icon: 'newspaper'},
-        {name: 'Minha Unidade', link:'some-link', icon: 'maps_home_work'},
-        {name: 'Reserva de Espaço', link: 'some-link', icon: 'event_available'},
+        {name: 'Reserva de Espaço', link: 'agendamento', icon: 'today'},
         {name: 'Ocorrências', link: 'ocorrencia', icon: 'menu_book'},
         {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
       ];
@@ -104,6 +102,7 @@ export class MenuComponent implements OnInit {
         {name: 'Ocorrências', link: 'ocorrencia', icon: 'menu_book'},
         {name: 'Correspondência', link: 'correspondencia', icon: 'forward_to_inbox'},
         {name: 'Visitante', link: 'visitante', icon: 'group'},
+        {name: 'Reserva de Espaço', link: 'agendamento', icon: 'today'},
       ];
     }
     return [];

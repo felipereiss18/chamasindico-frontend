@@ -3,6 +3,7 @@ import {Time} from "@angular/common";
 
 export class AreaComum {
 
+  id: number | undefined;
   condominio: {id: number} | undefined;
   bloco: {id: number} | undefined;
   nome: string | undefined;
@@ -29,8 +30,9 @@ export class AreaComum {
               fim?: Time,
               limpeza?: string,
               anotacao?: string,
-              diasFuncionamento?: number[]) {
-
+              diasFuncionamento?: number[],
+              id?: number) {
+    this.id = id;
     this.condominio = condominio;
     this.bloco = bloco;
     this.nome = nome;
