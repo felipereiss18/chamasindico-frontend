@@ -1,9 +1,9 @@
 export enum DiaSemanaEnum {
-  'Domingo' = 1,
-  'Segunda-Feira' = 2,
-  'Terça-Feira' = 3,
-  'Quarta-Feira' = 4,
-  'Quinta-Feira' = 5,
-  'Sexta-Feira' = 6,
-  'Sábado' = 7
+  'Segunda-Feira' = 1,
+  'Terça-Feira' = 2,
+  'Quarta-Feira' = 3,
+  'Quinta-Feira' = 4,
+  'Sexta-Feira' = 5,
+  'Sábado' = 6,
+  'Domingo' = 7,
 }

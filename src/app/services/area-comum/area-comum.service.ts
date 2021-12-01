@@ -62,4 +62,9 @@ export class AreaComumService extends BaseService<AreaComum, number>{
     return this.http.patch<ResponseDto<any>>(`${this.base}/${id}/situacao`, situacao, this.options)
       .pipe(catchError(this.handleError));
   }
+
+  buscarPorLocacao(): Observable<ResponseDto<AreaComum[]>>{
+    return this.http.get<ResponseDto<AreaComum[]>>(`${this.base}/locacao`, this.options)
+      .pipe(catchError(this.handleError));
+  }
 }

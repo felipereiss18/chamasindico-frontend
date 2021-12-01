@@ -9,6 +9,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ComunicadoModule} from "../comunicado/comunicado.module";
 import {CorrespondenciaModule} from "../correspondencia/correspondencia.module";
 import {OcorrenciaModule} from "../ocorrencia/ocorrencia.module";
+import {AgendamentoModule} from "../agendamento/agendamento.module";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {OcorrenciaModule} from "../ocorrencia/ocorrencia.module";
         MatDatepickerModule,
         ComunicadoModule,
         CorrespondenciaModule,
-        OcorrenciaModule
+        OcorrenciaModule,
+        AgendamentoModule
     ],
 })
 export class TelaInicialModule {

@@ -1,0 +1,26 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5em">
+      <mat-icon>today</mat-icon>
+      <span>Agendamentos</span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list *ngIf="agendamentos.length > 0">
+      <mat-list-item *ngFor="let agenda of agendamentos">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5em" style="cursor: pointer"
+             (click)="confirmar(agenda)">
+          <mat-icon mat-list-icon>event_available</mat-icon>
+          <div>
+            <div mat-line>{{agenda.areaComum}}</div>
+            <div mat-line>{{agenda.data | date: 'dd/MM/yyyy'}}</div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <div *ngIf="agendamentos.length == 0" fxLayout="row" fxLayoutAlign="center center">
+      <p>Nenhum comunicado encontrado.</p>
+    </div>
+  </mat-card-content>
+</mat-card>
