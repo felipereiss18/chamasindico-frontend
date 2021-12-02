@@ -1,8 +1,8 @@
 <div class="w-100" fxLayout="row" fxLayoutGap="1em">
-  <app-ativo-comunicado style="width: 33%"></app-ativo-comunicado>
-  <app-ativos-correspondencia style="width: 33%"></app-ativos-correspondencia>
-  <app-mural-ocorrencia style="width: 33%"></app-mural-ocorrencia>
+  <app-ativo-comunicado *ngIf="getUser().perfil?.role !== roles.ADMIN" style="width: 33%"></app-ativo-comunicado>
+  <app-ativos-correspondencia *ngIf="getUser().perfil?.role !== roles.ADMIN" style="width: 33%"></app-ativos-correspondencia>
+  <app-mural-ocorrencia *ngIf="getUser().perfil?.role !== roles.ADMIN" style="width: 33%"></app-mural-ocorrencia>
 </div>
 <div class="w-100" fxLayout="row" fxLayoutGap="1em">
-  <app-pendente-confirmacao-agendamento style="width: 33%"></app-pendente-confirmacao-agendamento>
+  <app-pendente-confirmacao-agendamento *ngIf="getUser().perfil?.role !== roles.ADMIN" style="width: 33%"></app-pendente-confirmacao-agendamento>
 </div>
