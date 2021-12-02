@@ -1,0 +1,47 @@
+<mat-card>
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <h2>Relatório de Agendamento</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="formRelatorio">
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2em">
+        <mat-form-field class="mat-form-field" fxFlex="20" appearance="outline">
+          <mat-label>Data de Início</mat-label>
+          <input matInput [matDatepicker]="dataPicker" (click)="dataPicker.open()" readonly
+                 formControlName="inicio">
+          <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dataPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="mat-form-field" fxFlex="20" appearance="outline">
+          <mat-label>Data de Termino</mat-label>
+          <input matInput [matDatepicker]="vencimentoPicker" (click)="vencimentoPicker.open()" readonly
+                 formControlName="fim" [min]="formRelatorio.controls.inicio.value">
+          <mat-datepicker-toggle matSuffix [for]="vencimentoPicker"></mat-datepicker-toggle>
+          <mat-datepicker #vencimentoPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2em">
+        <button mat-raised-button type="button" (click)="limpar()">
+          Limpar
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="gerar()">
+          Gerar
+        </button>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="4em">
+        <ngx-charts-bar-vertical
+          [view]="[500,400]"
+          scheme="ocean"
+          [results]="dadosPorAreaComum"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel">
+        </ngx-charts-bar-vertical>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

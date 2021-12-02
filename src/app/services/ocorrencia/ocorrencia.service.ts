@@ -9,6 +9,7 @@ import {catchError} from "rxjs/operators";
 import {OcorrenciaPesqReq, OcorrenciaPesqResp} from "../../interfaces/pesquisa/ocorrencia-pesquisa";
 import {ResponseDto} from "../../interfaces/response-dto.interface";
 import {SituacaoOcorrencia} from "../../models/SituacaoOcorrencia";
+import {EstatisticaOcorrencia} from "../../interfaces/relatorio/relatorio.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,18 @@ export class OcorrenciaService extends CrudService<Ocorrencia, number>{
 
   public buscarParaMim(): Observable<ResponseDto<Ocorrencia[]>> {
     return this.http.get<ResponseDto<Ocorrencia[]>>(`${this.base}/para-mim`, this.options)
+      .pipe(catchError(this.handleError));
+  }
+
+  public relatorioTipo(inicio: Date | undefined, fim: Date | undefined): Observable<ResponseDto<EstatisticaOcorrencia[]>> {
+    const body = {inicio: inicio, fim: fim};
+    return this.http.post<ResponseDto<EstatisticaOcorrencia[]>>(`${this.base}/relatorio/tipo`, body, this.options)
+      .pipe(catchError(this.handleError));
+  }
+
+  public relatorioSituacao(inicio: Date | undefined, fim: Date | undefined): Observable<ResponseDto<EstatisticaOcorrencia[]>> {
+    const body = {inicio: inicio, fim: fim};
+    return this.http.post<ResponseDto<EstatisticaOcorrencia[]>>(`${this.base}/relatorio/situacao`, body, this.options)
       .pipe(catchError(this.handleError));
   }
 }
