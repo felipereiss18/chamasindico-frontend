@@ -10,12 +10,14 @@ import {MatRippleModule} from "@angular/material/core";
 import { OcorrenciaRelatorioComponent } from './ocorrencia/ocorrencia-relatorio.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import { AgendamentoRelatorioComponent } from './agendamento/agendamento-relatorio.component';
+import { CorrespondenciaRelatorioComponent } from './correspondencia/correspondencia-relatorio.component';
 
 @NgModule({
   declarations: [
     TelaPrincipalRelatorioComponent,
     OcorrenciaRelatorioComponent,
-    AgendamentoRelatorioComponent
+    AgendamentoRelatorioComponent,
+    CorrespondenciaRelatorioComponent
   ],
   exports: [],
   imports: [

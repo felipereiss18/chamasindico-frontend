@@ -3,6 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {TelaPrincipalRelatorioComponent} from "./tela-principal/tela-principal-relatorio.component";
 import {OcorrenciaRelatorioComponent} from "./ocorrencia/ocorrencia-relatorio.component";
 import {AgendamentoRelatorioComponent} from "./agendamento/agendamento-relatorio.component";
+import {CorrespondenciaRelatorioComponent} from "./correspondencia/correspondencia-relatorio.component";
 
 export const routes: Routes = [
   {
@@ -16,6 +17,10 @@ export const routes: Routes = [
   {
     path: 'agendamento',
     component: AgendamentoRelatorioComponent
+  },
+  {
+    path: 'correspondencia',
+    component: CorrespondenciaRelatorioComponent
   }
 ]
 
