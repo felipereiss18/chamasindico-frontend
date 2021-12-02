@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EstatisticaOcorrencia} from "../../../interfaces/relatorio/relatorio-ocorrencia.interface";
+import {EstatisticaOcorrencia} from "../../../interfaces/relatorio/relatorio.interface";
 import {OcorrenciaService} from "../../../services/ocorrencia/ocorrencia.service";
 import {LegendPosition} from "@swimlane/ngx-charts";
 import {FormBuilder, FormGroup} from "@angular/forms";

@@ -9,11 +9,13 @@ import {RelatorioRoutingModule} from "./relatorio-routing.module";
 import {MatRippleModule} from "@angular/material/core";
 import { OcorrenciaRelatorioComponent } from './ocorrencia/ocorrencia-relatorio.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
+import { AgendamentoRelatorioComponent } from './agendamento/agendamento-relatorio.component';
 
 @NgModule({
   declarations: [
     TelaPrincipalRelatorioComponent,
-    OcorrenciaRelatorioComponent
+    OcorrenciaRelatorioComponent,
+    AgendamentoRelatorioComponent
   ],
   exports: [],
   imports: [

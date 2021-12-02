@@ -9,7 +9,7 @@ import {catchError} from "rxjs/operators";
 import {OcorrenciaPesqReq, OcorrenciaPesqResp} from "../../interfaces/pesquisa/ocorrencia-pesquisa";
 import {ResponseDto} from "../../interfaces/response-dto.interface";
 import {SituacaoOcorrencia} from "../../models/SituacaoOcorrencia";
-import {EstatisticaOcorrencia} from "../../interfaces/relatorio/relatorio-ocorrencia.interface";
+import {EstatisticaOcorrencia} from "../../interfaces/relatorio/relatorio.interface";
 
 @Injectable({
   providedIn: 'root'
