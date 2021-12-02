@@ -3,13 +3,17 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {CorrespondenciaService} from "../../../services/correspodencia/correspondencia.service";
 import {EstatistiticaCorrespondenciaTipo} from "../../../interfaces/relatorio/relatorio.interface";
 import {LegendPosition} from "@swimlane/ngx-charts";
+import {NgxSpinnerService} from "ngx-spinner";
+import {SnotifyService} from "ng-snotify";
+import {UserService} from "../../../core/auth/user/user.service";
+import {BasicComponent} from "../../../shared/basic-component/basic-component";
 
 @Component({
   selector: 'app-correspondencia-relatorio',
   templateUrl: './correspondencia-relatorio.component.html',
   styleUrls: ['./correspondencia-relatorio.component.css']
 })
-export class CorrespondenciaRelatorioComponent implements OnInit {
+export class CorrespondenciaRelatorioComponent extends BasicComponent implements OnInit {
 
   formRelatorio: FormGroup;
   dadosPorData: EstatistiticaCorrespondenciaTipo[] = [];
@@ -28,7 +32,12 @@ export class CorrespondenciaRelatorioComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: CorrespondenciaService) {
+    private service: CorrespondenciaService,
+    snipperService: NgxSpinnerService,
+    snotifyService: SnotifyService,
+    userService: UserService,
+    ) {
+    super(snipperService, snotifyService, userService);
     this.formRelatorio = this.formBuilder.group({
       inicio: [''],
       fim: ['']
@@ -39,6 +48,9 @@ export class CorrespondenciaRelatorioComponent implements OnInit {
     this.service.relatorioData(undefined, undefined).subscribe(
       (res) => {
         this.dadosPorData = res.data;
+        if(res.data && res.data.length === 0) {
+          this.messageInfo("Não foram encontrados dados para exebição.");
+        }
       }, error => {
         console.error(error)
       }
@@ -52,6 +64,9 @@ export class CorrespondenciaRelatorioComponent implements OnInit {
     this.service.relatorioData(inicio, termino).subscribe(
       (res) => {
         this.dadosPorData = res.data;
+        if(res.data && res.data.length === 0) {
+          this.messageInfo("Não foram encontrados dados para exebição.");
+        }
       }, error => {
         console.error(error)
       }
