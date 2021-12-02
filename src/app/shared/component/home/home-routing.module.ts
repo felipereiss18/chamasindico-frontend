@@ -73,6 +73,12 @@ const homeRoute: Routes = [
         loadChildren: () => import('../../../components/agendamento/agendamento.module')
           .then(m => m.AgendamentoModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'relatorio',
+        loadChildren: () => import('../../../components/relatorio/relatorio.module')
+          .then(m => m.RelatorioModule),
+        canActivate: [AuthGuard]
       }
     ]
   }

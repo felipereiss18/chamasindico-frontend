@@ -16,6 +16,7 @@ import {HomeModule} from "./shared/component/home/home.module";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {SnotifyModule, SnotifyService, ToastDefaults} from "ng-snotify";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -41,6 +42,7 @@ const maskConfig: Partial<IConfig> = {
     NgxEditorModule,
     NgxSpinnerModule,
     SnotifyModule,
+    NgxChartsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
