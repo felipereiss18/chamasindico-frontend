@@ -95,7 +95,7 @@ export class FormularioOcorrenciaComponent extends BasicComponent implements OnI
           }
         }, error => {
           console.error(error);
-          this.messageError('Não foi possível carregar os dados do comunicado.')
+          this.messageError('Não foi possível carregar os dados da ocorrência.')
         }
       )
     }

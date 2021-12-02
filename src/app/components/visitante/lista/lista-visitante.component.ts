@@ -57,7 +57,7 @@ export class ListaVisitanteComponent extends BasicComponent implements OnInit {
         this.dataSource.data = res.data.content
 
         if (this.dataSource.data != null && this.dataSource.data.length === 0) {
-          this.messageInfo('Nenhuma ocorrência encontrada.')
+          this.messageInfo('Nenhuma visistante encontrada.')
         }
 
       }, error => {

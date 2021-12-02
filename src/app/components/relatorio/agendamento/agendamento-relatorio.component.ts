@@ -2,13 +2,17 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {AgendaService} from "../../../services/agenda/agenda.service";
 import {EstatisticaAgendamento} from "../../../interfaces/relatorio/relatorio.interface";
+import {NgxSpinnerService} from "ngx-spinner";
+import {SnotifyService} from "ng-snotify";
+import {UserService} from "../../../core/auth/user/user.service";
+import {BasicComponent} from "../../../shared/basic-component/basic-component";
 
 @Component({
   selector: 'app-agendamento-relatorio',
   templateUrl: './agendamento-relatorio.component.html',
   styleUrls: ['./agendamento-relatorio.component.css']
 })
-export class AgendamentoRelatorioComponent implements OnInit {
+export class AgendamentoRelatorioComponent extends BasicComponent implements OnInit {
 
   dadosPorAreaComum: EstatisticaAgendamento[] = [];
 
@@ -23,7 +27,12 @@ export class AgendamentoRelatorioComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: AgendaService) {
+    private service: AgendaService,
+    snipperService: NgxSpinnerService,
+    snotifyService: SnotifyService,
+    userService: UserService,
+    ) {
+    super(snipperService, snotifyService, userService);
     this.formRelatorio = this.formBuilder.group({
       inicio: [''],
       fim: ['']
@@ -34,6 +43,9 @@ export class AgendamentoRelatorioComponent implements OnInit {
     this.service.relatorioAreaComum(undefined, undefined).subscribe(
       (res) => {
         this.dadosPorAreaComum = res.data;
+        if(res.data && res.data.length === 0) {
+          this.messageInfo("Não foram encontrados dados para exebição.");
+        }
       }, error => {
         console.error(error)
       }
@@ -47,6 +59,9 @@ export class AgendamentoRelatorioComponent implements OnInit {
     this.service.relatorioAreaComum(inicio, termino).subscribe(
       (res) => {
         this.dadosPorAreaComum = res.data;
+        if(res.data && res.data.length === 0) {
+          this.messageInfo("Não foram encontrados dados para exebição.");
+        }
       }, error => {
         console.error(error)
       }

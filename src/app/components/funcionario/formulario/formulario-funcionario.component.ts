@@ -74,7 +74,7 @@ export class FormularioFuncionarioComponent extends BasicComponent implements On
           this.formFuncionario.controls.usuario.setValue(res.data.usuario?.nome)
         },
         error => {
-          this.messageError('Não foi possível carregar os dados da Área Comum.');
+          this.messageError('Não foi possível carregar os dados do funcionário.');
           console.error(error);
         }
       );

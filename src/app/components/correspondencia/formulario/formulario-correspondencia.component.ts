@@ -93,7 +93,7 @@ export class FormularioCorrespondenciaComponent extends BasicComponent implement
           }
         }, error => {
           console.error(error);
-          this.messageError('Não foi possível carregar os dados do comunicado.')
+          this.messageError('Não foi possível carregar os dados da correspondência.')
         }
       )
     }

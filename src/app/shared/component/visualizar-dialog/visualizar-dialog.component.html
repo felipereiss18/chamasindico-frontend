@@ -3,8 +3,7 @@
     {{title}}
   </h4>
 
-  <div mat-dialog-content>
-    {{message}}
+  <div mat-dialog-content [innerHTML]="message">
   </div>
 
   <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em">
